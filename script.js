@@ -180,18 +180,19 @@ function generateFlight(flight){
     ` 
     <div class="flight-template">
         <div>
-            <span>${flight.date}</span>
-            <span>${flight.landingDate}</span>
+            <span>Departing Time: ${flight.date}</span>
+            <span>Arriving Time: ${flight.landingDate}</span>
         </div>
-        <div>${flight.seatType}</div>
-        <div>${flight.cost}</div>
+        <div><strong>Seat Type</strong>: ${flight.seatType}</div>
+        <div>Cost: ${flight.cost}</div>
     </div>
     `
     const flightsContainer = document.querySelector('#available-flights-container')
+    while(flightsContainer.firstChild) flightsContainer.removeChild(flightsContainer.firstChild)
     flightsContainer.insertAdjacentHTML('beforeend', newFlight)
 }
 
-bookFlightForm.addEventListener('submit', ()=>{
+bookFlightForm.addEventListener('submit', (e)=>{
     e.preventDefault()
     const fromInput = document.querySelector('#from-destination-box')
     const toInput = document.querySelector('#to-destination-box')
@@ -209,5 +210,22 @@ bookFlightForm.addEventListener('submit', ()=>{
         alert("No flights available")
         return
     }
-    
+    matchingFlights.forEach(flight=> {
+        const flightDetails ={
+            date: formatTime(flight.flightDate),
+            landingDate: formatTime(flight.landingDate),
+            seatType: flight.seatType,
+            cost: flight.baseCost,
+        }
+        generateFlight(flightDetails)
+    })
+
 })
+
+function formatTime(datetimeLong){
+    let date = new Date(datetimeLong)
+    let hous = date.getHours() < 10 ? "0" + date.getHours(): date.getHours()
+    let minutes = date.getMinutes() < 10? "0" + date.getMinutes(): date.getMinutes()
+    
+    return hous + ":" + minutes
+}
