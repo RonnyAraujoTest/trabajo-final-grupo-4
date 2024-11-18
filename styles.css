@@ -19,7 +19,7 @@ body{
         width: 100%;
         z-index: -10;
         height: 100%;
-        background-image: url('/bodyWallpaperwebp.webp');
+        background-image: url('./bodyWallpaperwebp.webp');
         background-attachment:fixed;
         background-position: center;
         background-repeat: no-repeat;
