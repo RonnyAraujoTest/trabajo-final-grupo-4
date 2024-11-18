@@ -158,6 +158,9 @@ dialog{
     &:hover{
         #signed-in-submenu{ display: flex;}
     }
+    span:first-of-type{
+        color: white;
+    }
 }
 @keyframes slide-down {
     from{
@@ -165,7 +168,7 @@ dialog{
         opacity: 0;
     }
     to{
-        transform: translate(0, 60%);
+        transform: translate(0, 25%);
         opacity: 1;
     }
 }
@@ -173,9 +176,9 @@ dialog{
     display: flex;
     position: absolute;
     align-items: center;
-    transform: translateY(80%);
+    transform: translateY(15%);
     /* min-width: 230px; */
-    height: 30px;
+    height: 60px;
     /* outline: 2px red solid; */
     
 }
