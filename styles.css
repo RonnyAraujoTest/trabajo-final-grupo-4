@@ -241,3 +241,31 @@ footer{
         margin-inline: auto;
     }
 }
+#available-flights-container{
+    display: flex;
+    flex-direction: column;
+    gap:4px;
+    height: 300px;
+    min-width: 100%;
+
+}
+
+.flight-template{
+    display: flex;
+    gap: 4px;
+    outline: rgb(0, 0, 0) solid 2px;
+    background-color: white;
+    border-radius: 8px;
+    padding-inline: 10px;
+    padding-block: 10px;
+    color: black;
+}
+
+#book-flight-popover{
+    padding-inline: 20px;
+    max-width: 600px;
+    form{
+        align-items: center;
+    }
+    justify-content: center;
+}

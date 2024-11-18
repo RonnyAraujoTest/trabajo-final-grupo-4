@@ -14,7 +14,8 @@ function findUserSignIn(userEmail, userPassword){
 }
 
 function findAvailableFlights(){
-    return flights.filter(flight => flight.flightStatus === 'available')
+    const foundFlights = flights.filter(flight => flight.flightStatus === 'available')
+    return foundFlights
 }
 
 function createNewClient(newClientInfo){
