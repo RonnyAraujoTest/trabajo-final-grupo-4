@@ -83,19 +83,19 @@ form{
     input{
         margin-bottom: 15px;
         border-radius: 4px;
-        outline: 2px solid var(--main-blue-color);
+        
+        &:is(:not([type="button"])){
+            outline: 2px solid var(--main-blue-color);
+        }
         border: none;
         padding-block: 5px;
         padding-inline: 15px;
         &:focus{
-            outline: 4px solid var(--main-blue-color);
+            outline: 4px solid rgb(37, 31, 225);
         }
         
     }
 
-}
-#signed-in-menu{
-    display: none;
 }
 
 [popover]{
@@ -114,7 +114,7 @@ dialog{
         margin-top: 10px;
     }
     &::backdrop{
-        background-color: rgba(255, 255, 255, 0.43);
+        background-color: rgba(255, 255, 255, 0.703);
         transition: all 0.2s ease;
         backdrop-filter: blur(6px);
     } 
@@ -125,4 +125,60 @@ dialog{
     right: 26px;
     padding: 4px 10px;
     background-color: rgb(238, 44, 89);
+}
+#signed-in-menu{
+    display: none;
+    font-size: 1rem;   
+    font-weight: 100; 
+    &:hover{
+        #signed-in-submenu{ display: flex;}
+    }
+}
+@keyframes slide-down {
+    from{
+        transform: translate(0, 140%);
+        opacity: 0;
+    }
+    to{
+        transform: translate(0, 60%);
+        opacity: 1;
+    }
+}
+#signed-in-submenu-wrapper{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    transform: translateY(80%);
+    /* min-width: 230px; */
+    height: 30px;
+    /* outline: 2px red solid; */
+    
+}
+#signed-in-submenu{
+    display: none;
+    flex-direction: column;
+    position: relative;
+    gap: 0;
+    background-color: var(--main-blue-color);
+    animation: slide-down 0.3s ease forwards;
+    /* transform: translate(0px, 50%); */
+    
+    span{
+        font-size: 1rem;
+        color: white;
+        padding-inline: 10px;
+        margin: 0;
+        background-color: var(--main-blue-color);
+        min-width: 100%;
+        text-align: center;
+        transition: transform 0.2s ease;
+
+        &:hover{
+            cursor: pointer;
+            color: var(--main-blue-color);
+            background-color: white;
+            outline: solid 4px var(--main-blue-color);
+            transform: translateX(20px);
+        }
+    }
 }

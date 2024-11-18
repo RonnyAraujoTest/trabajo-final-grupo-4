@@ -21,10 +21,13 @@
             <button class="button-styling">Sign Up</button>
             <button class="button-styling">Sign In</button>
             <div id="signed-in-menu">
-                Welcome, User name
-                <div id="signed-in-submenu">                    
-                    <div>Cancel Flight</div>
-                    <div>Sign Out</div>
+                <span>Welcome, User name</span>
+                <div id="signed-in-submenu-wrapper">
+                    <div id="signed-in-submenu">
+                        <span>Profile</span>
+                        <span>Cancel Flight</span>
+                        <span id="sign-out-button">Sign Out</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,7 +66,7 @@
     <dialog id="sign-in-popover" popover>
         <button class="button-styling close-popover-button">X</button>
         <h1>Sign In</h1>
-        <form action="" id="Log-in-form">
+        <form action="" id="log-in-form">
             <label for="email">Email</label>
             <input type="email" id="email" placeholder="email" autocomplete ="on" required>
             <label for="password">Password</label>
@@ -72,16 +75,17 @@
         </form>
     </dialog>
     <dialog id="check-in-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
         <h1>Check In</h1>
         <form action="">
             <label for="confirmation-number-box">confirmation #</label>
             <input type="number" name="confirmation-number-box" id="confirmation-number-box" placeholder="confirmation number" required>
-            <label for="airport-search-box">City or Airport</label>
-            <input type="search" name="airport-search-box" id="airport-search-box" placeholder="city or airport"  required>
+            
             <input value="Go" type="submit" class="button-styling">
         </form>
     </dialog>
     <dialog id="book-flight-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
         <h1>Book Flight</h1>
         <form action="">
             <label for="from-destination-box">From</label>
@@ -93,14 +97,15 @@
         </form>
     </dialog>
     <div id="user-info-wrapper">
-        <span>id</span>
+        <!-- <span>id</span>
         <span>Full Name</span>
         <span>full address</span>
         <span>email</span>
         <span>phone number</span>
-        <span>mileAccumulated</span>
+        <span>mileAccumulated</span> -->
     </div>
 </body>
-<script src="script.js"></script>
+<!-- <script src="utilityFunctions.js" type="module" ></script> -->
+<script type="module" src="script.js"></script>
 
 </html>

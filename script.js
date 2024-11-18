@@ -1,4 +1,5 @@
-
+import {findUserSignIn, createNewClient}  from './utilityFunctions.js'
+// import {clients, flights, reservedFlights} from './clients.js'
 
 const signUpButton = document.querySelector('#signing-options > button:first-of-type')
 const signInButton = document.querySelector('#signing-options > button:last-of-type')
@@ -11,25 +12,34 @@ const signInPopOver = document.querySelector('#sign-in-popover')
 const signUpPopOver = document.querySelector('#sign-up-popover')
 const closePopOverButtons = document.querySelectorAll('.close-popover-button')
 const userInfoWrapper = document.querySelector("#user-info-wrapper")
+const signOutButton = document.querySelector('#sign-out-button')
+const signInForm = document.querySelector('#log-in-form')
+const signUpForm = document.querySelector('#sign-up-form')
 signUpButton.addEventListener('click', (e)=> showPopOverModal(e, signUpPopOver))
 signInButton.addEventListener('click', (e)=> showPopOverModal(e, signInPopOver))
 checkInNavButton.addEventListener('click', (e)=> showPopOverModal(e, checkInPopOver))
 bookFlightNavButton.addEventListener('click', (e)=> showPopOverModal(e, bookFlightPopOver))
+signInForm.addEventListener('submit', validateSignIn)
+signUpForm.addEventListener('submit', validateSignUp)
+
 let userLoggedIn = false
 
-const userOptions = document.querySelector('#signed-in-menu')
+const signedInMenu = document.querySelector('#signed-in-menu')
 window.addEventListener('load', ()=>{
-    const isOnline = localStorage.getItem('isUserSignedIn') === 'true'
-    userLoggedIn = isOnline 
-    userOptions.style.display = !userLoggedIn? 'none': 'flex'
-    toggleSignInSignUpOptions(userLoggedIn)
-    localStorage.setItem('isUserSignedIn', isOnline)
+    uiUpdateOnSignIn()
+    updateUserName()
 })
-
+signOutButton.addEventListener('click', userLogOut)
 function print(msg){
     console.log(msg)
 }
-
+function uiUpdateOnSignIn(){
+    const isOnline = localStorage.getItem('isUserSignedIn') === 'true'
+    userLoggedIn = isOnline 
+    signedInMenu.style.display = !userLoggedIn? 'none': 'flex'
+    toggleSignInSignUpOptions(userLoggedIn)
+    localStorage.setItem('isUserSignedIn', isOnline)
+}
 function toggleSignInSignUpOptions(userSignedIn){
 
     if(userSignedIn)
@@ -61,4 +71,63 @@ closePopOverButtons.forEach(button =>{
 function hidePopOver(){
     const popOvers = document.querySelectorAll('[popover]') 
     popOvers.forEach(popover => popover.close())
+}
+
+function userLogOut(){
+    // alert("clicked")
+    userLoggedIn = false 
+    signedInMenu.style.display = !userLoggedIn? 'none': 'flex'
+    toggleSignInSignUpOptions(userLoggedIn)
+    localStorage.setItem('isUserSignedIn', userLoggedIn)
+    // uiUpdateOnSignIn()
+}
+
+function validateSignIn(e){
+    e.preventDefault()
+    const email = document.querySelector('#email').value 
+    const password = document.querySelector('#password').value
+    const userDetails = findUserSignIn(email, password)
+    if(userDetails !== 'undefined'){
+        const spanElement = document.querySelector(`#signed-in-menu span:first-of-type`)
+        spanElement.textContent= `Welcome, ${userDetails.firstName}`
+        const userJson = JSON.stringify(userDetails)
+        localStorage.setItem('userDetails', userJson)
+    }
+    localStorage.setItem('isUserSignedIn', userDetails !== 'undefined'? true: false)
+    signInPopOver.close()
+    uiUpdateOnSignIn()
+}
+function validateSignUp(e){
+    e.preventDefault()
+    const userName = document.querySelector('#user-name')
+    const userLastName = document.querySelector('#last-name')
+    const userEmail = document.querySelector('#user-email')
+    const userCreatedPw = document.querySelector('#create-user-password')
+    const userConfirmPw = document.querySelector('#confirm-password')
+    const userAddress = document.querySelector('#user-address')
+    const userCompanyName = document.querySelector('#company-name')
+    const userPhoneNum = document.querySelector('#phone-number')
+    if(userCreatedPw.value !== userConfirmPw.value){
+        console.log("password must match")
+        return
+    }
+    const newClient = {
+        firstName: userName.value, lastName: userLastName.value, email: userEmail.value, password: userCreatedPw.value,
+        address: userAddress.value, companyName: userCompanyName.value, phoneNumber: userPhoneNum.value, milesAccumulated: 0
+    }
+    localStorage.setItem('userDetails', JSON.stringify(newClient))
+    localStorage.setItem('isUserSignedIn', true)
+    updateUserName()
+    createNewClient(newClient)
+    signUpPopOver.close()
+    uiUpdateOnSignIn()
+
+
+}
+
+function updateUserName(){
+    const spanElement = document.querySelector(`#signed-in-menu span:first-of-type`)
+    const userDetails = localStorage.getItem('userDetails')? JSON.parse(localStorage.getItem('userDetails')): 'undefined'
+    if(userDetails === 'undefined') return
+    spanElement.textContent= `Welcome, ${userDetails.firstName}`    
 }

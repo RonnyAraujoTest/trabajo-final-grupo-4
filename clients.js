@@ -154,4 +154,4 @@ const reservedFlights = [
       seatType: "Economy"
     }
   ];
-export default { clients, flights };
+export { clients, flights, reservedFlights };
