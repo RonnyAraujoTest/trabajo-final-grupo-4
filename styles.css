@@ -12,16 +12,33 @@ body{
     /* outline: solid red 2px; */
     align-items: center;
     --main-blue-color: rgb(37, 84, 255);
+    min-height: 2000px;    
+    &::before{
+        position: fixed;
+        content: "";
+        width: 100%;
+        z-index: -10;
+        height: 100%;
+        background-image: url('/bodyWallpaperwebp.webp');
+        background-attachment:fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: grayscale(90%) brightness(0.3) ;        
+    }
 }
 
 nav{
     display: grid;
+    position: sticky;
+    top: 20px;
     grid-template-columns: auto max-content auto;
     align-items: center;
     width: 100%;
     height: fit-content;
     padding-block: 10px;    
     font-size: 1rem;
+    border-bottom: 1px solid var(--main-blue-color);
     /* outline: solid red 2px; */
     div:first-of-type{        
         padding-left: 10px;
@@ -34,14 +51,14 @@ nav{
         justify-content: center;
         gap: 20px;
         button{ 
-            color: black; 
+            color: white; 
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
             border: none;
             background-color: unset;
             &:hover{
-                color: var(--main-blue-color);
+                color: aqua;
                 cursor: pointer;
             }
         }
@@ -57,7 +74,10 @@ nav{
 /* #sign-in-popover, #sign-up-popover{
 
 } */
-
+#has-company-question-container{
+    display: flex;
+    flex-direction: column;
+}
 .button-styling{
     padding-block: 10px;
     padding-inline: 15px;
@@ -84,19 +104,24 @@ form{
         margin-bottom: 15px;
         border-radius: 4px;
         
-        &:is(:not([type="button"])){
+        &:is(:not([type="button"], [type="radio"])){
             outline: 2px solid var(--main-blue-color);
         }
         border: none;
         padding-block: 5px;
         padding-inline: 15px;
         &:focus{
-            outline: 4px solid rgb(37, 31, 225);
+            &:is(:not([type="radio"])){
+                outline: 4px solid rgb(37, 31, 225);
+            }
         }
         
     }
 
 }
+/* #no-choice:is(input[type="radio"]:checked) form > #company-name {    
+    display: none;
+} */
 
 [popover]{
     padding-inline: 100px;
@@ -180,6 +205,23 @@ dialog{
             outline: solid 4px var(--main-blue-color);
             transform: translateX(20px);
         }
+    }
+}
+#call-to-action{
+    margin-top: 100px;
+    max-width: 60%;
+    h1{
+        font-size: 2.5rem;
+        text-align: center;
+        color: white;
+    }
+    > div:first-of-type{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* div{
+            display: flex;
+        } */
     }
 }
 
