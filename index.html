@@ -14,7 +14,7 @@
         <div id="main-options-container">
             <button >Flight Status</button>
             <button >Check-In</button>
-            <button >Book</button>
+            <!-- <button >Book</button> -->
             <button >Available Flights</button>
         </div>
         <div id="signing-options">
@@ -98,11 +98,19 @@
         <h1>Book Flight</h1>
         <form action="">
             <label for="from-destination-box">From</label>
-            <input type="search" name="from-destination-box" id="from-destination-box" placeholder="Starting Destination">
+            <input list="suggestions" type="search" name="from-destination-box" id="from-destination-box" placeholder="Starting Destination" required>
+            <datalist id="suggestions">
+                <option value="ATL"></option>
+                <option value="BOS"></option>
+                <option value="LAX"></option>
+                <option value="JFK"></option>
+                <option value="ORD"></option>
+            </datalist>
+              
             <label for="to-destination-box">To</label>
-            <input type="search" name="to-destination-box" id="to-destination-box" placeholder="Final Destination">            
+            <input list ="suggestions" type="search" name="to-destination-box" id="to-destination-box" placeholder="Final Destination" required>
             <input type="button" value="Switch" class="button-styling" id="switch-button">
-            <input type="button" value="Continue" class="button-styling">
+            <input type="submit" value="Continue" class="button-styling">
         </form>
         <div id="available-flights-container"></div>
     </dialog>

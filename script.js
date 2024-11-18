@@ -1,4 +1,4 @@
-import {findUserSignIn, createNewClient}  from './utilityFunctions.js'
+import {findUserSignIn, createNewClient, findAvailableFlights}  from './utilityFunctions.js'
 // import {clients, flights, reservedFlights} from './clients.js'
 
 const signUpButton = document.querySelector('#signing-options > button:first-of-type')
@@ -7,6 +7,7 @@ const switchButton = document.querySelector('#switch-button')
 const checkInNavButton = document.querySelector('#main-options-container > button:nth-of-type(2)')
 const checkInPopOver = document.querySelector('#check-in-popover')
 const bookFlightPopOver = document.querySelector('#book-flight-popover')
+const bookFlightForm = document.querySelector('#book-flight-popover form')
 const bookFlightNavButton = document.querySelector('#main-options-container > button:nth-of-type(3)')
 const signInPopOver = document.querySelector('#sign-in-popover')
 const signUpPopOver = document.querySelector('#sign-up-popover')
@@ -80,7 +81,7 @@ function toggleSignInSignUpOptions(userSignedIn){
     }
 }
 function showPopOverModal(e, popOver){
-    if(userLoggedIn) {
+    if(userLoggedIn || popOver === bookFlightPopOver) {
         popOver.showModal()
         return
     }
@@ -189,3 +190,24 @@ function generateFlight(flight){
     const flightsContainer = document.querySelector('#available-flights-container')
     flightsContainer.insertAdjacentHTML('beforeend', newFlight)
 }
+
+bookFlightForm.addEventListener('submit', ()=>{
+    e.preventDefault()
+    const fromInput = document.querySelector('#from-destination-box')
+    const toInput = document.querySelector('#to-destination-box')
+    const allFlights = findAvailableFlights()
+    const matchingFlights = allFlights.filter(flight =>{
+        if(flight.fromDestination.toLowerCase() === fromInput.value.toLowerCase()
+        && flight.toDestination.toLowerCase() === toInput.value.toLowerCase())
+        {
+            return flight
+        }else {
+            return 'undefined'
+        }
+    })
+    if(matchingFlights === 'undefined'){
+        alert("No flights available")
+        return
+    }
+    
+})
