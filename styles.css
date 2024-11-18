@@ -182,3 +182,17 @@ dialog{
         }
     }
 }
+
+footer{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    padding-block: 20px;
+    min-width: 100%;
+    align-items: center;
+    color: white; 
+    background-color: var(--main-blue-color);
+    > div{
+        margin-inline: auto;
+    }
+}

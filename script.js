@@ -15,6 +15,13 @@ const userInfoWrapper = document.querySelector("#user-info-wrapper")
 const signOutButton = document.querySelector('#sign-out-button')
 const signInForm = document.querySelector('#log-in-form')
 const signUpForm = document.querySelector('#sign-up-form')
+const body = document.body
+const footer = `
+    <footer>
+      <div> © ${new Date().getFullYear()} Copyright: <span>Software Solution <strong>SRL</strong></span> <span>“Soluciones con un solo clic”</span></div>
+    </footer>
+`
+body.insertAdjacentHTML('beforeend', footer)
 signUpButton.addEventListener('click', (e)=> showPopOverModal(e, signUpPopOver))
 signInButton.addEventListener('click', (e)=> showPopOverModal(e, signInPopOver))
 checkInNavButton.addEventListener('click', (e)=> showPopOverModal(e, checkInPopOver))
