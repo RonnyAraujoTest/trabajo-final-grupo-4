@@ -82,6 +82,7 @@ function toggleSignInSignUpOptions(userSignedIn){
     }
 }
 function showPopOverModal(e, popOver){
+    toggleWindowScrolling(false)
     if(userLoggedIn || popOver === bookFlightPopOver) {
         popOver.showModal()
         return
@@ -91,6 +92,7 @@ function showPopOverModal(e, popOver){
         return
     }
     signUpPopOver.showModal()
+    
 }
 closePopOverButtons.forEach(button =>{
     button.addEventListener('click', ()=>{
@@ -103,6 +105,7 @@ function hidePopOver(){
     forms.forEach(form=> form.reset())
     popOvers.forEach(popover => popover.close())
     toggleCompanyTextBox(companyTextBoxEnabled, false)
+    toggleWindowScrolling(true)
 }
 
 function userLogOut(){
@@ -181,11 +184,11 @@ function generateFlight(flight){
     ` 
     <div class="flight-template">
         <div>
-            <span>Departing Time: ${flight.date}</span>
-            <span>Arriving Time: ${flight.landingDate}</span>
+            <span><strong>Departing Time:</strong> ${flight.date}</span>
+            <span><strong>Arriving Time:</strong> ${flight.landingDate}</span>
         </div>
         <div><strong>Seat Type</strong>: ${flight.seatType}</div>
-        <div>Cost: ${flight.cost}</div>
+        <div><strong>Cost:</strong> ${flight.cost}</div>
     </div>
     `
     const flightsContainer = document.querySelector('#available-flights-container')
@@ -227,6 +230,16 @@ function formatTime(datetimeLong){
     let date = new Date(datetimeLong)
     let hous = date.getHours() < 10 ? "0" + date.getHours(): date.getHours()
     let minutes = date.getMinutes() < 10? "0" + date.getMinutes(): date.getMinutes()
-    
-    return hous + ":" + minutes
+    const formattedTime = `${hous}:${minutes}`
+    return formattedTime
+}
+
+function toggleWindowScrolling(enabled){
+    if(!enabled){
+        body.style.height= '100%'
+        body.style.overflowY = 'hidden'
+        return
+    }
+    body.style.height= 'initial'
+    body.style.overflowY = 'initial'
 }
