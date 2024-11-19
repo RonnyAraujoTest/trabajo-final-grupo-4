@@ -38,13 +38,13 @@ nav{
     height: fit-content;
     padding-block: 10px;    
     font-size: 1rem;
-    border-bottom: 1px solid var(--main-blue-color);
+    border-block: 1px solid rgba(255, 255, 255, 0.286);
     /* outline: solid red 2px; */
     div:first-of-type{        
         padding-left: 10px;
         font-size: 1.4rem;
         font-weight: 800;
-        color: var(--main-blue-color);
+        color: white;
     }
     #main-options-container{
         display: flex;
@@ -70,6 +70,15 @@ nav{
         gap: 5px;
         padding-right: 10px;
     }
+    &::before{
+        position: absolute;
+        content: "";
+        width: 100%;
+        /* background-color: rgba(222, 222, 222, 0.206); */
+        z-index: -10;
+        height: 100%;        
+        backdrop-filter: blur(10px) ;        
+    }
 }
 /* #sign-in-popover, #sign-up-popover{
 
@@ -78,23 +87,7 @@ nav{
     display: flex;
     flex-direction: column;
 }
-.button-styling{
-    padding-block: 10px;
-    padding-inline: 15px;
-    border: none;
-    border-radius: 4px;
-    --multiplier: 0;
-    --bg-color: rgb(50, 55, calc(62 + var(--multiplier)));
-    background-color: var(--bg-color);
-    color: white;
-    &:last-of-type{
-        --bg-color: var(--main-blue-color);
-    }
-    &:hover{
-        cursor: pointer;
-        filter: brightness(1.8);
-    }
-}
+
 form{
     display: flex;
     flex-direction: column;
@@ -104,24 +97,37 @@ form{
         margin-bottom: 15px;
         border-radius: 4px;
         
-        &:is(:not([type="button"], [type="radio"])){
+        &:is(:not([type="button"], [type="radio"], [type="submit"])){
             outline: 2px solid var(--main-blue-color);
         }
         border: none;
         padding-block: 5px;
         padding-inline: 15px;
-        &:focus{
-            &:is(:not([type="radio"])){
-                outline: 4px solid rgb(37, 31, 225);
+        &:user-within{            
+            &:is(:not([type="radio"], [type="submit"])){
+                outline: 2px solid rgb(0, 0, 0);
             }
-        }
-        
+        }  
     }
-
 }
-/* #no-choice:is(input[type="radio"]:checked) form > #company-name {    
-    display: none;
-} */
+.button-styling{
+    padding-block: 10px;
+    padding-inline: 15px;
+    border: none;
+    border-radius: 4px;
+    --bg-color: rgb(123, 123, 123);
+    background-color: var(--bg-color);    
+    color: white;
+   
+    &:hover{ 
+        cursor: pointer;
+        outline: solid white 2px;
+    }
+    &:last-of-type{
+        background-color: var(--main-blue-color);
+    }
+    transition: outline 0.08s ease-in-out;
+}
 
 [popover]{
     padding-inline: 100px;
@@ -142,14 +148,22 @@ dialog{
         background-color: rgba(255, 255, 255, 0.703);
         transition: all 0.2s ease;
         backdrop-filter: blur(6px);
-    } 
+    }    
+    .button-styling{
+        &:hover{outline: solid rgb(28, 28, 28) 2px;}
+    }
 }
-.close-popover-button{
+
+.button-styling.close-popover-button{
     position: absolute;
     top: 20px;
     right: 26px;
     padding: 4px 10px;
     background-color: rgb(238, 44, 89);
+    &:hover{
+        background-color: rgb(255, 74, 74); 
+        outline: none;       
+    }
 }
 #signed-in-menu{
     display: none;
@@ -177,10 +191,7 @@ dialog{
     position: absolute;
     align-items: center;
     transform: translateY(15%);
-    /* min-width: 230px; */
     height: 60px;
-    /* outline: 2px red solid; */
-    
 }
 #signed-in-submenu{
     display: none;
@@ -189,8 +200,6 @@ dialog{
     gap: 0;
     background-color: var(--main-blue-color);
     animation: slide-down 0.3s ease forwards;
-    /* transform: translate(0px, 50%); */
-    
     span{
         font-size: 1rem;
         color: white;
@@ -222,9 +231,6 @@ dialog{
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* div{
-            display: flex;
-        } */
     }
 }
 
@@ -247,7 +253,6 @@ footer{
     gap:4px;
     height: 300px;
     min-width: 100%;
-
 }
 
 .flight-template{
@@ -262,10 +267,10 @@ footer{
 }
 
 #book-flight-popover{
-    padding-inline: 20px;
-    max-width: 600px;
+    padding-inline: 0;
     form{
         align-items: center;
+        min-width: 500px;
     }
     justify-content: center;
 }

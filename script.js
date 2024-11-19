@@ -52,10 +52,11 @@ let userLoggedIn = false
 
 const signedInMenu = document.querySelector('#signed-in-menu')
 window.addEventListener('load', ()=>{
-    toggleCompanyTextBox(companyTextBoxEnabled, false)
+    toggleCompanyTextBox(companyTextBoxEnabled, false)    
     uiUpdateOnSignIn()
     updateUserName()    
     forms.forEach(form=> form.reset())
+    joinUsButton.style.display = userLoggedIn? 'none': 'initial'
 })
 signOutButton.addEventListener('click', userLogOut)
 function print(msg){
