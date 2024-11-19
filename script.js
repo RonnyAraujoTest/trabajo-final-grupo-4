@@ -25,7 +25,9 @@ const yesChoiceHasCompany = document.querySelector('#yes-choice')
 let companyTextBoxEnabled = false
 const forms = document.querySelectorAll('form') 
 const body = document.body
-
+const fromInput = document.querySelector('#from-destination-box')
+const toInput = document.querySelector('#to-destination-box')
+const flightsContainer = document.querySelector('#available-flights-container')
 const footer = `
     <footer>
       <div> © ${new Date().getFullYear()} Copyright: <span>Software Solution <strong>SRL</strong></span> <span>“Soluciones con un solo clic”</span></div>
@@ -49,18 +51,29 @@ yesChoiceHasCompany.addEventListener('click',()=>{
     toggleCompanyTextBox(companyTextBoxEnabled)
 })
 let userLoggedIn = false
-
+switchButton.addEventListener('click', ()=>{
+    const fromValue = fromInput.value
+    fromInput.value = toInput.value
+    toInput.value = fromValue
+})
 const signedInMenu = document.querySelector('#signed-in-menu')
 window.addEventListener('load', ()=>{
-    toggleCompanyTextBox(companyTextBoxEnabled, false)
+    toggleCompanyTextBox(companyTextBoxEnabled, false)    
     uiUpdateOnSignIn()
     updateUserName()    
     forms.forEach(form=> form.reset())
+    joinUsButton.style.display = userLoggedIn? 'none': 'initial'
 })
 signOutButton.addEventListener('click', userLogOut)
 function print(msg){
     console.log(msg)
 }
+//pop overs close event for returning page scrolling back to normal
+const popOvers = document.querySelectorAll('[popover]')
+popOvers.forEach(popoverElement=> popoverElement.addEventListener('close',()=>{
+    toggleWindowScrolling(true)
+    flightsContainer.innerHTML = ""
+}))
 function uiUpdateOnSignIn(){
     const isOnline = localStorage.getItem('isUserSignedIn') === 'true'
     userLoggedIn = isOnline 
@@ -81,6 +94,7 @@ function toggleSignInSignUpOptions(userSignedIn){
     }
 }
 function showPopOverModal(e, popOver){
+    toggleWindowScrolling(false)
     if(userLoggedIn || popOver === bookFlightPopOver) {
         popOver.showModal()
         return
@@ -90,6 +104,7 @@ function showPopOverModal(e, popOver){
         return
     }
     signUpPopOver.showModal()
+    
 }
 closePopOverButtons.forEach(button =>{
     button.addEventListener('click', ()=>{
@@ -97,11 +112,12 @@ closePopOverButtons.forEach(button =>{
     })
 })
 function hidePopOver(){
-    const popOvers = document.querySelectorAll('[popover]') 
+    // const popOvers = document.querySelectorAll('[popover]') 
     companyTextBoxEnabled = false
     forms.forEach(form=> form.reset())
     popOvers.forEach(popover => popover.close())
     toggleCompanyTextBox(companyTextBoxEnabled, false)
+    toggleWindowScrolling(true)
 }
 
 function userLogOut(){
@@ -177,39 +193,37 @@ function toggleCompanyTextBox(textBoxEnabled, removeChecked = true){
 
 function generateFlight(flight){
     const newFlight = 
-    ` 
+    `
     <div class="flight-template">
         <div>
-            <span>Departing Time: ${flight.date}</span>
-            <span>Arriving Time: ${flight.landingDate}</span>
+            <span><strong>Departing Time:</strong> ${flight.date}</span>
+            <span><strong>Arriving Time:</strong> ${flight.landingDate}</span>
         </div>
         <div><strong>Seat Type</strong>: ${flight.seatType}</div>
-        <div>Cost: ${flight.cost}</div>
+        <div><strong>Cost:</strong> ${flight.cost}</div>
     </div>
     `
-    const flightsContainer = document.querySelector('#available-flights-container')
-    while(flightsContainer.firstChild) flightsContainer.removeChild(flightsContainer.firstChild)
     flightsContainer.insertAdjacentHTML('beforeend', newFlight)
 }
 
 bookFlightForm.addEventListener('submit', (e)=>{
     e.preventDefault()
-    const fromInput = document.querySelector('#from-destination-box')
-    const toInput = document.querySelector('#to-destination-box')
+    
     const allFlights = findAvailableFlights()
-    const matchingFlights = allFlights.filter(flight =>{
-        if(flight.fromDestination.toLowerCase() === fromInput.value.toLowerCase()
-        && flight.toDestination.toLowerCase() === toInput.value.toLowerCase())
-        {
-            return flight
-        }else {
-            return 'undefined'
-        }
+    
+    const fromVal = fromInput.value.toLowerCase()
+    const toVal = toInput.value.toLowerCase()
+    let matchingFlights = allFlights.filter(flight =>{
+        return(fromVal === flight.fromDestination.toLowerCase() 
+        &&  toVal ===  flight.toDestination.toLowerCase())        
     })
+    console.table(matchingFlights)
     if(matchingFlights === 'undefined'){
         alert("No flights available")
         return
     }
+    //empty the flights container
+    flightsContainer.innerHTML =""
     matchingFlights.forEach(flight=> {
         const flightDetails ={
             date: formatTime(flight.flightDate),
@@ -226,6 +240,16 @@ function formatTime(datetimeLong){
     let date = new Date(datetimeLong)
     let hous = date.getHours() < 10 ? "0" + date.getHours(): date.getHours()
     let minutes = date.getMinutes() < 10? "0" + date.getMinutes(): date.getMinutes()
-    
-    return hous + ":" + minutes
+    const formattedTime = `${hous}:${minutes}`
+    return formattedTime
+}
+
+function toggleWindowScrolling(enabled){
+    if(!enabled){
+        body.style.height= '100%'
+        body.style.overflowY = 'hidden'
+        return
+    }
+    body.style.height= 'initial'
+    body.style.overflowY = 'initial'
 }
