@@ -62,6 +62,11 @@ signOutButton.addEventListener('click', userLogOut)
 function print(msg){
     console.log(msg)
 }
+//pop overs close event for returning page scrolling back to normal
+const popOvers = document.querySelectorAll('[popover]')
+popOvers.forEach(popoverElement=> popoverElement.addEventListener('close',()=>{
+    toggleWindowScrolling(true)
+}))
 function uiUpdateOnSignIn(){
     const isOnline = localStorage.getItem('isUserSignedIn') === 'true'
     userLoggedIn = isOnline 
@@ -100,7 +105,7 @@ closePopOverButtons.forEach(button =>{
     })
 })
 function hidePopOver(){
-    const popOvers = document.querySelectorAll('[popover]') 
+    // const popOvers = document.querySelectorAll('[popover]') 
     companyTextBoxEnabled = false
     forms.forEach(form=> form.reset())
     popOvers.forEach(popover => popover.close())
