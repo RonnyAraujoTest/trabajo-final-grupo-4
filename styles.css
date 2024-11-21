@@ -164,10 +164,7 @@ form{
     padding-top: 10px;
     border-radius: 10px;      
     opacity: 1;
-    border: 2px var(--main-blue-color) solid;   
-    transition:  height 0.1s , opacity 0.3s ease,
-    transform 0.5s ease-in-out ;
-    transition-behavior: allow-discrete;
+    border: 2px var(--main-blue-color) solid;
 }
 
 
@@ -179,16 +176,17 @@ dialog{
     }
     box-shadow: 0 0 100px 2px var(--main-blue-color);
     &::backdrop{
-        /* background-color: rgba(255, 255, 255, 0.703); */
-        transition: all 0.2s ease;
         backdrop-filter: blur(6px);
-        transition: backdrop-filter 0.6s ease;
+        transition: backdrop-filter 0.9s ease-in-out;
         transition-behavior: allow-discrete;
     }    
     .button-styling{
-        &:hover{outline: solid rgb(28, 28, 28) 2px;}
-    }
-    dialog-open{background-color: green;}
+        &:hover{outline: solid rgb(28, 28, 28) 2px;}        
+        &:is(&:first-of-type, &:last-of-type){align-self: flex-end;}        
+    }   
+    transition:  opacity 0.3s ease,
+    transform 0.5s ease-in-out ;
+    transition-behavior: allow-discrete; 
 }
 
 .button-styling.close-popover-button{
@@ -320,14 +318,17 @@ footer{
         min-width: 500px;
     }
     justify-content: center;
+    .button-styling{
+        &:last-of-type{align-self: initial;}
+    }
 }
 
 @starting-style{
-    [popover]{
+    dialog{
          opacity: 0;
          transform: translateY(-1000px);
      }
      dialog::backdrop{
-        filter: blur(0);
+        backdrop-filter: blur(0px);
      }
  }

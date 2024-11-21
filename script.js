@@ -1,9 +1,9 @@
 import {
   findUserSignIn,  createNewClient, findAvailableFlights, formatTime , 
-  toggleWindowScrolling, generateFlight
+  toggleWindowScrolling, generateFlight, currentClients
 } from "./utilityFunctions.js";
 // import {clients, flights, reservedFlights} from './clients.js'
-
+let currentUsers = []
 const signUpButton = document.querySelector(
   "#signing-options > button:first-of-type"
 );
@@ -48,7 +48,9 @@ const footer = `
 `;
 const signInChanged = new Event("sign-in-changed");
 window.addEventListener('sign-in-changed',()=>{
-   joinUsButton.style.display = userLoggedIn? 'initial': 'none'
+   joinUsButton.style.display = userLoggedIn? 'none': 'initial'
+   signedInMenu.style.display = !userLoggedIn ? "none" : "flex";
+   toggleSignInSignUpOptions(userLoggedIn);
 })
 body.insertAdjacentHTML("beforeend", footer);
 signUpButton.addEventListener("click", (e) =>
@@ -75,7 +77,7 @@ yesChoiceHasCompany.addEventListener("click", () => {
   companyTextBoxEnabled = true;
   toggleCompanyTextBox(companyTextBoxEnabled);
 });
-let userLoggedIn = false;
+let userLoggedIn = localStorage.getItem('isUserSignedIn') === 'true';
 switchButton.addEventListener("click", () => {
   const fromValue = fromInput.value;
   fromInput.value = toInput.value;
@@ -83,6 +85,13 @@ switchButton.addEventListener("click", () => {
 });
 const signedInMenu = document.querySelector("#signed-in-menu");
 window.addEventListener("load", () => {
+  
+  try{currentUsers = [...JSON.parse(localStorage.getItem('currentUsers'))]}
+  catch(e){
+    currentUsers = [...currentClients]
+    localStorage.setItem('currentUsers', JSON.stringify(currentUsers))
+    console.error("no users in local storage")
+  }
   toggleCompanyTextBox(companyTextBoxEnabled, false);
   uiUpdateOnSignIn();
   updateUserName();
@@ -147,10 +156,8 @@ function hidePopOver() {
 
 function userLogOut() {
   // alert("clicked")
-  userLoggedIn = false;
-  signedInMenu.style.display = !userLoggedIn ? "none" : "flex";
-  toggleSignInSignUpOptions(userLoggedIn);
-  joinUsButton.style.display = "initial";
+  userLoggedIn = false;  
+  // joinUsButton.style.display = "initial";
   localStorage.setItem("isUserSignedIn", userLoggedIn);
   window.dispatchEvent(signInChanged)
 }
@@ -159,17 +166,18 @@ function validateSignIn(e) {
   e.preventDefault();
   const email = document.querySelector("#email").value;
   const password = document.querySelector("#password").value;
-  const userDetails = findUserSignIn(email, password);
-  if (userDetails !== "undefined") {
-    const spanElement = document.querySelector(
-      `#signed-in-menu span:first-of-type`
-    );
+  const userDetails = findUserSignIn(email, password, currentUsers);
+  if (userDetails) {
+    const spanElement = document.querySelector(`#signed-in-menu span:first-of-type`);
+    userLoggedIn = true;
     spanElement.textContent = `Welcome, ${userDetails.firstName}`;
-    joinUsButton.style.display = "none";
+    // joinUsButton.style.display = "none";
     const userJson = JSON.stringify(userDetails);
+    localStorage.setItem("isUserSignedIn", userLoggedIn)
     localStorage.setItem("userDetails", userJson);
     signInPopOver.close();
     uiUpdateOnSignIn();
+    window.dispatchEvent(signInChanged)
     return
   }
   
@@ -211,7 +219,8 @@ function validateSignUp(e) {
   localStorage.setItem("userDetails", JSON.stringify(newClient));
   localStorage.setItem("isUserSignedIn", true);
   updateUserName();
-  createNewClient(newClient);
+  currentUsers = createNewClient(newClient);
+  localStorage.setItem('currentUsers', JSON.stringify(currentUsers))
   uiUpdateOnSignIn();
   window.dispatchEvent(signInChanged)
   signUpPopOver.close();

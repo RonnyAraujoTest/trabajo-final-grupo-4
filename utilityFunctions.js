@@ -1,8 +1,8 @@
 import { clients, flights, reservedFlights } from "./clients.js";
 
-let currentClients = [...clients];
-function findUserSignIn(userEmail, userPassword) {
-  const matchingClientFound = currentClients.find((client) => {
+const currentClients = [...clients];
+function findUserSignIn(userEmail, userPassword, allClients) {
+  const matchingClientFound = allClients.find((client) => {
     return client.email.toLowerCase() === userEmail.toLowerCase() &&
       client.password === userPassword
       ? client
@@ -25,8 +25,9 @@ function findAvailableFlights() {
 }
 
 function createNewClient(newClientInfo) {
-  currentClients = [...currentClients, newClientInfo];
+  const updatedClients = [...currentClients, newClientInfo];
   console.log(`Updated Clients List ${currentClients}`);
+  return updatedClients
 }
 function formatTime(datetimeLong) {
   let date = new Date(datetimeLong);
@@ -70,5 +71,5 @@ function formCustomErrorMessage(inputElement, message){
 }
 export {
   findUserSignIn,  findAvailableFlights,  createNewClient,  formatTime,
-  toggleWindowScrolling,  generateFlight, print
+  toggleWindowScrolling,  generateFlight, print, currentClients
 };
