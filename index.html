@@ -70,7 +70,7 @@
             <input type="number" name="phone-number" id="phone-number" placeholder="1-839-555-555" required>
 
             <input type="submit" value="Submit" class="button-styling">
-        </form>
+        </form>        
     </dialog>
     <dialog id="sign-in-popover" popover>
         <button class="button-styling close-popover-button">X</button>
@@ -82,6 +82,7 @@
             <input type="password" name="password" id="password" placeholder="password" autocomplete="on" required>
             <input type="submit" value="Log In" class="button-styling">
         </form>
+        <span>Error:<br> wrong email or password, please try again.</span>
     </dialog>
     <dialog id="check-in-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
@@ -128,14 +129,7 @@
             </div>
         </div>
     </div>
-    <div id="user-info-wrapper">
-        <!-- <span>id</span>
-        <span>Full Name</span>
-        <span>full address</span>
-        <span>email</span>
-        <span>phone number</span>
-        <span>mileAccumulated</span> -->
-    </div>
+    <div id="user-info-wrapper"></div>
 
 </body>
 <!-- <script src="utilityFunctions.js" type="module" ></script> -->
