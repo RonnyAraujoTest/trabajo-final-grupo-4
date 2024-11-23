@@ -181,7 +181,7 @@ function validateSignIn(e) {
   if (userDetails) {
     const spanElement = document.querySelector(`#signed-in-menu span:first-of-type`);
     userLoggedIn = true;
-    spanElement.textContent = `Welcome, ${userDetails.firstName}`;
+    spanElement.textContent = `Bienvenido, ${userDetails.firstName}`;
     // joinUsButton.style.display = "none";
     const userJson = JSON.stringify(userDetails);
     localStorage.setItem("isUserSignedIn", userLoggedIn)
@@ -211,7 +211,7 @@ function validateSignUp(e) {
     ? document.querySelector("#company-name")
     : "undefined";
   const userPhoneNum = document.querySelector("#phone-number");
-  if (userCreatedPw.value !== userConfirmPw.value) {
+  if (userCreatedPw.value !== userConfirmPw.value){
     console.log("password must match");
     return;
   }
@@ -248,7 +248,7 @@ function updateUserName() {
     ? JSON.parse(localStorage.getItem("userDetails"))
     : "undefined";
   if (userDetails === "undefined") return;
-  spanElement.textContent = `Welcome, ${userDetails.firstName}`;
+  spanElement.textContent = `Bienvenido, ${userDetails.firstName}`;
 }
 
 function toggleCompanyTextBox(textBoxEnabled, removeChecked = true) {
