@@ -94,7 +94,7 @@ nav{
 #sign-in-popover{
     
     justify-items: center;
-    max-width: 200px;
+    /* max-width: 200px; */
     overflow-x: hidden;
     padding-bottom: 60px;
     
@@ -120,7 +120,7 @@ nav{
 form{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    /* align-items: flex-start; */
     gap: 4px;   
     input{
         margin-bottom: 15px;
@@ -321,6 +321,13 @@ footer{
     .button-styling{
         &:last-of-type{align-self: initial;}
     }
+}
+#new-user-popover{
+    
+    .button-styling.submit-button{
+        align-self: flex-end;
+    }
+    
 }
 
 @starting-style{

@@ -52,12 +52,12 @@ function generateFlight(flight, flightsContainer) {
   const newFlight = `
       <div class="flight-template">
           <div>
-              <span><strong>Departing Time:</strong> ${flight.date}</span>
-              <span><strong>Arriving Time:</strong> ${flight.landingDate}</span>
+              <span><strong>Hora de salida:</strong> ${flight.date}</span>
+              <span><strong>Hora de llegada:</strong> ${flight.landingDate}</span>
           </div>
-          <div><strong>Seat Type</strong>: ${flight.seatType}</div>
-          <div><strong>Cost:</strong> ${flight.cost}</div>
-          <button type="submit" class="button-styling reserve-flight-button">Reserve Flight</button>
+          <div><strong>Tipo de asiento</strong>: ${flight.seatType}</div>
+          <div><strong>Costo:</strong> ${flight.cost}</div>
+          <button type="submit" class="button-styling reserve-flight-button">Reservar Vuelo</button>
       </div>
       `;
   flightsContainer.insertAdjacentHTML("beforeend", newFlight);

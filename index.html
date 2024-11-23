@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FlyHigh Airlines</title>
+    <title>FlyHigh Aerolineas</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -13,8 +13,7 @@
         <div>FlyHigh</div>
         <div id="main-options-container">
             <button >Estado De Vuelo </button>
-            <button >Check-In</button>
-            <!-- <button >Book</button> -->
+            <button >Registrar Vuelo</button>
             <button >Vuelos Disponibles</button>
         </div>
         <div id="signing-options">
@@ -24,7 +23,6 @@
                 <span>Bienvenido, usuario</span>
                 <div id="signed-in-submenu-wrapper">
                     <div id="signed-in-submenu">
-                        <span>Perfil</span>
                         <span>Cancelar Vuelo</span>
                         <span id="sign-out-button">Cerrar Sesion</span>
                     </div>
@@ -80,18 +78,18 @@
             <input type="email" id="email" placeholder="email" autocomplete ="on" required>
             <label for="password">Contraseña</label>
             <input type="password" name="password" id="password" placeholder="password" autocomplete="on" required>
-            <input type="submit" value="Log In" class="button-styling">
+            <input type="submit" value="Iniciar" class="button-styling">
         </form>
         <span>Error:<br> correo o contraseña equivocada, por favor intentelo de nuevo.</span>
     </dialog>
     <dialog id="check-in-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
-        <h1>Check In</h1>
+        <h1>Registrar Vuelo</h1>
         <form action="">
-            <label for="confirmation-number-box">confirmation #</label>
+            <label for="confirmation-number-box">Numero de confirmacion</label>
             <input type="number" name="confirmation-number-box" id="confirmation-number-box" placeholder="confirmation number" required>
             
-            <input value="Go" type="submit" class="button-styling">
+            <input value="Continuar" type="submit" class="button-styling">
         </form>
     </dialog>
     <dialog id="book-flight-popover" popover>
