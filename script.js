@@ -1,9 +1,10 @@
 import {
   findUserSignIn,  createNewClient, findAvailableFlights, formatTime , 
-  toggleWindowScrolling, generateFlight, currentClients
+  toggleWindowScrolling, generateFlight, currentClients, reservedFlights as allReservedFlights,
+  cancelFlight, reserveFlight
 } from "./utilityFunctions.js";
-// import {clients, flights, reservedFlights} from './clients.js'
 let currentUsers = []
+let currentReservedFlights = [];
 const signUpButton = document.querySelector(
   "#signing-options > button:first-of-type"
 );
@@ -85,13 +86,23 @@ switchButton.addEventListener("click", () => {
 });
 const signedInMenu = document.querySelector("#signed-in-menu");
 window.addEventListener("load", () => {
-  
-  try{currentUsers = [...JSON.parse(localStorage.getItem('currentUsers'))]}
-  catch(e){
-    currentUsers = [...currentClients]
-    localStorage.setItem('currentUsers', JSON.stringify(currentUsers))
-    console.error("no users in local storage")
+  const loadedUsers  = localStorage.getItem('currentUsers') 
+  const loadedReservedFlights = localStorage.getItem('reservedFlights');
+  if(loadedUsers === null){
+    currentUsers =  [...currentClients];
+    localStorage.setItem('currentUsers', JSON.stringify(currentUsers));
   }
+  else{
+    currentUsers = JSON.parse(localStorage.getItem('currentUsers'));
+  }
+  if (loadedReservedFlights === null){
+    currentReservedFlights = [...allReservedFlights];
+    localStorage.setItem('reservedFlights', JSON.stringify(currentReservedFlights));
+  }
+  else{
+    currentReservedFlights = JSON.parse(localStorage.getItem('reservedFlights'));
+  }
+
   toggleCompanyTextBox(companyTextBoxEnabled, false);
   uiUpdateOnSignIn();
   updateUserName();
@@ -204,9 +215,11 @@ function validateSignUp(e) {
     console.log("password must match");
     return;
   }
-  const hasCompany =
-    userCompanyName !== "undefined" ? userCompanyName.value : "";
+  const hasCompany = userCompanyName !== "undefined" ? userCompanyName.value : "";  
+  const lastUserId = currentUsers[currentUsers.length-1].id
+  const newClientId = lastUserId + 1
   const newClient = {
+    id: newClientId,
     firstName: userName.value,
     lastName: userLastName.value,
     email: userEmail.value,
@@ -215,6 +228,7 @@ function validateSignUp(e) {
     companyName: hasCompany,
     phoneNumber: userPhoneNum.value,
     milesAccumulated: 0,
+    isCorporateClient: userCompanyName === "undefined"? false: true
   };
   localStorage.setItem("userDetails", JSON.stringify(newClient));
   localStorage.setItem("isUserSignedIn", true);
@@ -251,7 +265,6 @@ function toggleCompanyTextBox(textBoxEnabled, removeChecked = true) {
 
 bookFlightForm.addEventListener("submit", (e) => {
   e.preventDefault();
-
   const allFlights = findAvailableFlights();
 
   const fromVal = fromInput.value.toLowerCase();

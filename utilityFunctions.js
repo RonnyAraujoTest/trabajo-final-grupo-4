@@ -57,6 +57,7 @@ function generateFlight(flight, flightsContainer) {
           </div>
           <div><strong>Seat Type</strong>: ${flight.seatType}</div>
           <div><strong>Cost:</strong> ${flight.cost}</div>
+          <button type="submit" class="button-styling reserve-flight-button">Reserve Flight</button>
       </div>
       `;
   flightsContainer.insertAdjacentHTML("beforeend", newFlight);
@@ -69,7 +70,25 @@ function formCustomErrorMessage(inputElement, message){
   inputElement.setCustomValidity(message);
   inputElement.reportValidity();
 }
+function reserveFlight(flightInfo, clientLoggedIn, client, flightsReserved){
+  if(clientLoggedIn){
+    flightsReserved.push({
+      reservedId: flightsReserved[flightsReserved.length-1].reservedId+1,
+      flightDate: flightInfo.date,
+      clientId: client.id,
+      flightId: flightInfo.id,
+      baseCost: flightInfo.cost,
+      seatType: flightInfo.type
+    })
+  }
+  localStorage.setItem('reservedFlights', JSON.stringify(flightsReserved))
+}
+function cancelFlight(flightNumber, flightsReserved){
+  const updatedFlightsReserved = flightsReserved.filter(flightToCancel=> flightToCancel.reserveId !== flightNumber)
+  localStorage.setItem('reservedFlights', JSON.stringify(updatedFlightsReserved))
+  return updatedFlightsReserved
+}
 export {
   findUserSignIn,  findAvailableFlights,  createNewClient,  formatTime,
-  toggleWindowScrolling,  generateFlight, print, currentClients
+  toggleWindowScrolling,  generateFlight, print, currentClients, reservedFlights, cancelFlight, reserveFlight
 };

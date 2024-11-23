@@ -72,7 +72,7 @@ const flights = [
     seatId: "25B",
     seatType: "Economy",
     baseCost: 200,
-    flightStatus: "available",
+    flightStatus: "reserved",
   },
   {
     flightId: 2,
@@ -163,7 +163,7 @@ const flights = [
     seatId: "5A",
     seatType: "First Class",
     baseCost: 350,
-    flightStatus: "available",
+    flightStatus: "reserved",
   },
   {
     flightId: 9,
@@ -215,7 +215,7 @@ const flights = [
     seatId: "13B",
     seatType: "Economy",
     baseCost: 180,
-    flightStatus: "available",
+    flightStatus: "reserved",
   },
   {
     flightId: 13,
@@ -259,29 +259,29 @@ const flights = [
 ];
 
 const reservedFlights = [
-    {
-      reservedId: 1,
-      flightDate: "2024-12-01T10:00:00-05:00",
-      clientId: 1,
-      flightId: 1,
-      baseCost: 200,
-      seatType: "Economy"
-    },
-    {
-      reservedId: 2,
-      flightDate: "2025-01-15T11:00:00-05:00",
-      clientId: 1,
-      flightId: 2,
-      baseCost: 500,
-      seatType: "First Class"
-    },
-    {
-      reservedId: 3,
-      flightDate: "2024-12-05T12:00:00-05:00",
-      clientId: 2,
-      flightId: 3,
-      baseCost: 150,
-      seatType: "Economy"
-    }
-  ];
+  {
+    reservedId: 1,
+    flightDate: "2025-02-15T10:00:00-05:00",
+    clientId: 7,
+    flightId: 1023,
+    baseCost: 200,
+    seatType: "Economy"
+  },
+  {
+    reservedId: 2,
+    flightDate: "2025-02-22T07:00:00-05:00",
+    clientId: 15,
+    flightId: 2045,
+    baseCost: 350,
+    seatType: "First Class"
+  },
+  {
+    reservedId: 3,
+    flightDate: "2025-02-26T03:00:00-05:00",
+    clientId: 12,
+    flightId: 3067,
+    baseCost: 180,
+    seatType: "Economy"
+  }
+];
 export { clients, flights, reservedFlights };
