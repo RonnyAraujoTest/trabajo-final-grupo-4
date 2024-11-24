@@ -69,6 +69,7 @@
 
             <input type="submit" value="Confirmar" class="button-styling">
         </form>        
+        <span class="error-message">Error:<br>La contraseña no coincide, por favor intentelo de nuevo.</span>
     </dialog>
     <dialog id="sign-in-popover" popover>
         <button class="button-styling close-popover-button">X</button>
@@ -80,14 +81,14 @@
             <input type="password" name="password" id="password" placeholder="password" autocomplete="on" required>
             <input type="submit" value="Iniciar" class="button-styling">
         </form>
-        <span>Error:<br> correo o contraseña equivocada, por favor intentelo de nuevo.</span>
+        <span class="error-message">Error:<br> correo o contraseña equivocada, por favor intentelo de nuevo.</span>
     </dialog>
     <dialog id="check-in-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
         <h1>Registrar Vuelo</h1>
         <form action="">
-            <label for="confirmation-number-box">Numero de confirmacion</label>
-            <input type="number" name="confirmation-number-box" id="confirmation-number-box" placeholder="confirmation number" required>
+            <label for="confirmation-number-box">Numero de confirmacion / vuelo</label>
+            <input type="number" name="confirmation-number-box" id="confirmation-number-box" placeholder="numero de confirmacion / vuelo" required>
             
             <input value="Continuar" type="submit" class="button-styling">
         </form>
@@ -127,7 +128,7 @@
             </div>
         </div>
     </div>
-    <div id="user-info-wrapper"></div>
+    
 
 </body>
 <!-- <script src="utilityFunctions.js" type="module" ></script> -->

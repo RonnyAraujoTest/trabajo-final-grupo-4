@@ -3,8 +3,10 @@ import {
   toggleWindowScrolling, generateFlight, currentClients, reservedFlights as allReservedFlights,
   cancelFlight, reserveFlight
 } from "./utilityFunctions.js";
+import {flights} from './clients.js'
 let currentUsers = []
 let currentReservedFlights = [];
+let currentFlights = [];
 const signUpButton = document.querySelector(
   "#signing-options > button:first-of-type"
 );
@@ -40,19 +42,25 @@ const body = document.body;
 const fromInput = document.querySelector("#from-destination-box");
 const toInput = document.querySelector("#to-destination-box");
 const flightsContainer = document.querySelector("#available-flights-container");
-const errorMsgElement = signInPopOver.querySelector('span') 
-const signInPopOverFormInputs = signInPopOver.querySelectorAll('form input') 
+const errorMsgElements = document.querySelectorAll('.error-message') 
+const reserveFlightButtons = document.querySelectorAll('.reserve-flight-button')
+const allInputs = document.querySelectorAll('input')
+
 const footer = `
     <footer>
       <div> © ${new Date().getFullYear()} Copyright: <span>Software Solution <strong>SRL</strong></span> <span>“Soluciones con un solo clic”</span></div>
     </footer>
 `;
 const signInChanged = new Event("sign-in-changed");
+allInputs.forEach((input)=> input.addEventListener('focus', () => disableErrorMessages()))
 window.addEventListener('sign-in-changed',()=>{
    joinUsButton.style.display = userLoggedIn? 'none': 'initial'
    signedInMenu.style.display = !userLoggedIn ? "none" : "flex";
    toggleSignInSignUpOptions(userLoggedIn);
 })
+reserveFlightButtons.forEach(button => button.addEventListener('click', (e) => {
+  alert("button clicked")
+}))
 body.insertAdjacentHTML("beforeend", footer);
 signUpButton.addEventListener("click", (e) =>
   showPopOverModal(e, signUpPopOver)
@@ -88,6 +96,8 @@ const signedInMenu = document.querySelector("#signed-in-menu");
 window.addEventListener("load", () => {
   const loadedUsers  = localStorage.getItem('currentUsers') 
   const loadedReservedFlights = localStorage.getItem('reservedFlights');
+  currentFlights = localStorage.getItem('currentFlights') === null? [...flights]: JSON.parse(localStorage.getItem('currentFlights'))
+  localStorage.setItem('currentFlights', JSON.stringify(currentFlights))
   if(loadedUsers === null){
     currentUsers =  [...currentClients];
     localStorage.setItem('currentUsers', JSON.stringify(currentUsers));
@@ -162,7 +172,7 @@ function hidePopOver() {
   toggleCompanyTextBox(companyTextBoxEnabled, false);
   toggleWindowScrolling(true, body);
   popOvers.forEach((popover) => popover.close());
-  errorMsgElement.style.display = 'none'
+  disableErrorMessages()
 }
 
 function userLogOut() {
@@ -178,25 +188,18 @@ function validateSignIn(e) {
   const email = document.querySelector("#email").value;
   const password = document.querySelector("#password").value;
   const userDetails = findUserSignIn(email, password, currentUsers);
-  if (userDetails) {
+  if (userDetails !== "undefined") {
     const spanElement = document.querySelector(`#signed-in-menu span:first-of-type`);
     userLoggedIn = true;
     spanElement.textContent = `Bienvenido, ${userDetails.firstName}`;
-    // joinUsButton.style.display = "none";
     const userJson = JSON.stringify(userDetails);
     localStorage.setItem("isUserSignedIn", userLoggedIn)
     localStorage.setItem("userDetails", userJson);
     signInPopOver.close();
     uiUpdateOnSignIn();
     window.dispatchEvent(signInChanged)
-    return
-  }
-  
-  errorMsgElement.style.display = 'flex'
-  // localStorage.setItem(
-  //   "isUserSignedIn",
-  //   userDetails !== "undefined" ? true : false
-  // );  
+  }  
+  enableErrorMessages()
 }
 function validateSignUp(e) {
   e.preventDefault();
@@ -213,6 +216,7 @@ function validateSignUp(e) {
   const userPhoneNum = document.querySelector("#phone-number");
   if (userCreatedPw.value !== userConfirmPw.value){
     console.log("password must match");
+    enableErrorMessages()
     return;
   }
   const hasCompany = userCompanyName !== "undefined" ? userCompanyName.value : "";  
@@ -260,9 +264,6 @@ function toggleCompanyTextBox(textBoxEnabled, removeChecked = true) {
   companyNameInput.style.display = value;
   companyNameLabel.style.display = value;
 }
-
-
-
 bookFlightForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const allFlights = findAvailableFlights();
@@ -275,11 +276,11 @@ bookFlightForm.addEventListener("submit", (e) => {
       toVal === flight.toDestination.toLowerCase()
     );
   });
-  //empty the flights container
+  //vacia el contenerdor de vuelos encontrados
   flightsContainer.innerHTML = "";
   console.table(matchingFlights);
   if (matchingFlights.length === 0) {
-    alert("No flights available");
+    alert("No se encontraron vuelos disponibles");
     return;
   }
   
@@ -289,11 +290,45 @@ bookFlightForm.addEventListener("submit", (e) => {
       landingDate: formatTime(flight.landingDate),
       seatType: flight.seatType,
       cost: flight.baseCost,
+      flightId: flight.flightId
     };
     generateFlight(flightDetails, flightsContainer);
   });
+  //esto consigue cada uno de los botones de reserva y les agrega el poder reservar el vuelo
+  // si el usuario esta registrado y con una sesion activa
+  flightsContainer.querySelectorAll(".reserve-flight-button").forEach((button) => {
+    if(!userLoggedIn){
+      button.style.display = 'none'
+      return 
+    }
+    const reservedGreenColor = '#22291C'
+    button.addEventListener("click", (e) => {
+        const parentNode = e.target.parentNode;      
+        e.target.textContent = "Vuelo Reservado";
+        e.target.setAttribute("disabled", "disabled")
+        e.target.style.backgroundColor = reservedGreenColor;
+        e.target.style.pointerEvents = 'none';
+        e.target.style.cursor = 'default';        
+        parentNode.style.color = reservedGreenColor;
+        parentNode.style.outline = `2px solid ${reservedGreenColor}`;
+        const clientId = JSON.parse(localStorage.getItem('userDetails')).id
+        const flightDetails = {
+          flightDate: e.target.dataset.flightDate,
+          flightId: e.target.dataset.flightId,
+          seatType: e.target.dataset.seatType,
+          baseCost: e.target.dataset.flightCost,    
+        }
+        const flightsReservedNow = [...JSON.parse(localStorage.getItem('reservedFlights'))]
+        const flightsNow = [...JSON.parse(localStorage.getItem('currentFlights'))]
+        reserveFlight(flightDetails, clientId, flightsReservedNow, flightsNow)
+    })
+  })
 });
-signInPopOverFormInputs.forEach(elem=> elem.addEventListener('focus',()=>{
-  errorMsgElement.style.display = 'none'
-}))
+
+function disableErrorMessages(){
+  errorMsgElements.forEach(element => element.style.display = 'none')
+}
+function enableErrorMessages(){
+  errorMsgElements.forEach(element => element.style.display = 'flex')
+}
 

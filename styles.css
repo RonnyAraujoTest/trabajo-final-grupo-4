@@ -91,27 +91,21 @@ nav{
     }
 }
 
-#sign-in-popover{
-    
+#sign-in-popover{    
     justify-items: center;
-    /* max-width: 200px; */
     overflow-x: hidden;
-    padding-bottom: 60px;
-    
+    padding-bottom: 60px;    
     opacity: 1;
-    span{
-        display: none;
-        position: absolute;
-        bottom: 10px;
-        font-weight: bold;
-        color: rgb(255, 49, 49);
-        animation: slide-from-right 0.2s ease-in-out forwards;
-        max-width: 50%;
-    } 
- 
-    
 }
-
+.error-message{
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    font-weight: bold;
+    color: rgb(255, 49, 49);
+    animation: slide-from-right 0.2s ease-in-out forwards;
+    max-width: 50%;
+} 
 #has-company-question-container{
     display: flex;
     flex-direction: column;
@@ -128,15 +122,19 @@ form{
         
         &:is(:not([type="button"], [type="radio"], [type="submit"])){
             outline: 2px solid var(--main-blue-color);
+            &:focus-within{
+                outline: 3px solid ;
+            }
         }
         border: none;
         padding-block: 5px;
         padding-inline: 15px;
         &:user-within{            
-            &:is(:not([type="radio"], [type="submit"])){
+            &:is(&:not([type="radio"], [type="submit"])){
                 outline: 2px solid rgb(0, 0, 0);
             }
         }  
+        
     }
 }
 .button-styling{
@@ -169,6 +167,8 @@ form{
 
 
 dialog{
+    overflow-x: hidden;
+    top: 10px;
     h1{ 
         color: var(--main-blue-color);    
         text-align: center;    
@@ -266,6 +266,9 @@ dialog{
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+    .button-styling{
+        font-size: 1.3rem;
     }
 }
 

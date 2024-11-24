@@ -262,24 +262,24 @@ const reservedFlights = [
   {
     reservedId: 1,
     flightDate: "2025-02-15T10:00:00-05:00",
-    clientId: 7,
-    flightId: 1023,
+    clientId: 5,
+    flightId: 1,
     baseCost: 200,
     seatType: "Economy"
   },
   {
     reservedId: 2,
     flightDate: "2025-02-22T07:00:00-05:00",
-    clientId: 15,
-    flightId: 2045,
+    clientId: 4,
+    flightId: 8,
     baseCost: 350,
     seatType: "First Class"
   },
   {
     reservedId: 3,
     flightDate: "2025-02-26T03:00:00-05:00",
-    clientId: 12,
-    flightId: 3067,
+    clientId: 3,
+    flightId: 12,
     baseCost: 180,
     seatType: "Economy"
   }
