@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FlyHigh Airlines</title>
+    <title>FlyHigh Aerolineas</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -12,21 +12,19 @@
     <nav>
         <div>FlyHigh</div>
         <div id="main-options-container">
-            <button >Flight Status</button>
-            <button >Check-In</button>
-            <!-- <button >Book</button> -->
-            <button >Available Flights</button>
+            <button >Estado De Vuelo </button>
+            <button >Registrar Vuelo</button>
+            <button >Vuelos Disponibles</button>
         </div>
         <div id="signing-options">
-            <button class="button-styling">Sign Up</button>
-            <button class="button-styling">Sign In</button>
+            <button class="button-styling">Crear Cuenta</button>
+            <button class="button-styling">Iniciar Sesion</button>
             <div id="signed-in-menu">
-                <span>Welcome, User name</span>
+                <span>Bienvenido, usuario</span>
                 <div id="signed-in-submenu-wrapper">
                     <div id="signed-in-submenu">
-                        <span>Profile</span>
-                        <span>Cancel Flight</span>
-                        <span id="sign-out-button">Sign Out</span>
+                        <span id="cancel-flight-button">Cancelar Vuelo</span>
+                        <span id="sign-out-button">Cerrar Sesion</span>
                     </div>
                 </div>
             </div>
@@ -34,72 +32,73 @@
     </nav>
     <dialog  id="sign-up-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
-        <h1>Sign Up</h1>
+        <h1>Crear Cuenta</h1>
         <form action="" id="sign-up-form">            
-            <label for="user-name">First Name</label>
+            <label for="user-name">Primer Nombre</label>
             <input type="text" name="user-name" id="user-name" placeholder="first name" autocomplete="on" required>
 
-            <label for="last-name">Last Name</label>
+            <label for="last-name">Apellido</label>
             <input type="text" name="last-name" placeholder="last name" id="last-name" autocomplete="on" required>
             
-            <label for="user-email">Email</label>
+            <label for="user-email">Correo Electronico</label>
             <input type="email" placeholder="email" id="user-email" required>
 
-            <label for="create-user-password">Create Password</label>
+            <label for="create-user-password">Crear Contraseña</label>
             <input type="password" name="create-user-password" id="create-user-password" placeholder="new password" required>
 
-            <label for="confirm-password"> Confirm Password</label>
+            <label for="confirm-password">Confirmar Contraseña</label>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="enter new password" required>
 
-            <label for="user-address">Address</label>
+            <label for="user-address">Direccion</label>
             <input type="text" name="user-address" id="user-address" placeholder="address" required>
             
             <div id="has-company-question-container">
-                <span>Do you own a company?</span>
+                <span>Es dueño de una compañía?</span>
                 <div>
-                    <label for="yes-choice">Yes <input type="radio" name="company-choice" id="yes-choice"></label>
+                    <label for="yes-choice">Si <input type="radio" name="company-choice" id="yes-choice"></label>
                     <label for="no-choice">No <input type="radio" name="company-choice" value = "true" id="no-choice" checked></label>
                 </div>
             </div>
             
 
-            <label for="company-name" id="company-name-label">Company Name</label>
+            <label for="company-name" id="company-name-label">Nombre de la Compañía</label>
             <input type="text" name="company-name" id="company-name" placeholder="company name" required>
             
-            <label for="phone-number">Phone Number</label>
+            <label for="phone-number">Numero de Telefono</label>
             <input type="number" name="phone-number" id="phone-number" placeholder="1-839-555-555" required>
 
-            <input type="submit" value="Submit" class="button-styling">
+            <input type="submit" value="Confirmar" class="button-styling">
         </form>        
+        <span class="error-message">Error:<br>La contraseña no coincide, por favor intentelo de nuevo.</span>
     </dialog>
     <dialog id="sign-in-popover" popover>
         <button class="button-styling close-popover-button">X</button>
-        <h1>Sign In</h1>
+        <h1>Iniciar Sesion</h1>
         <form action="" id="log-in-form">
-            <label for="email">Email</label>
+            <label for="email">Correo Electronico</label>
             <input type="email" id="email" placeholder="email" autocomplete ="on" required>
-            <label for="password">Password</label>
+            <label for="password">Contraseña</label>
             <input type="password" name="password" id="password" placeholder="password" autocomplete="on" required>
-            <input type="submit" value="Log In" class="button-styling">
+            <input type="submit" value="Iniciar" class="button-styling">
         </form>
-        <span>Error:<br> wrong email or password, please try again.</span>
+        <span class="error-message">Error:<br> correo o contraseña equivocada, por favor intentelo de nuevo.</span>
     </dialog>
     <dialog id="check-in-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
-        <h1>Check In</h1>
+        <h1>Registrar Vuelo</h1>
         <form action="">
-            <label for="confirmation-number-box">confirmation #</label>
-            <input type="number" name="confirmation-number-box" id="confirmation-number-box" placeholder="confirmation number" required>
+            <label for="confirmation-number-box">Numero de confirmacion / vuelo</label>
+            <input type="number" name="confirmation-number-box" id="confirmation-number-box" placeholder="numero de confirmacion / vuelo" required>
             
-            <input value="Go" type="submit" class="button-styling">
+            <input value="Continuar" type="submit" class="button-styling">
         </form>
     </dialog>
     <dialog id="book-flight-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
-        <h1>Search Flights</h1>
+        <h1>Buscar Vuelos</h1>
         <form action="">
-            <label for="from-destination-box">From</label>
-            <input list="suggestions" type="search" name="from-destination-box" id="from-destination-box" placeholder="Starting Destination" required>
+            <label for="from-destination-box">Desde</label>
+            <input list="suggestions" type="search" name="from-destination-box" id="from-destination-box" placeholder="Destino de Partida" required>
             <datalist id="suggestions">
                 <option value="ATL"></option>
                 <option value="BOS"></option>
@@ -113,23 +112,23 @@
                 <option value="DEN"></option>
             </datalist>
               
-            <label for="to-destination-box">To</label>
-            <input list ="suggestions" type="search" name="to-destination-box" id="to-destination-box" placeholder="Final Destination" required>
-            <input type="button" value="Switch" class="button-styling" id="switch-button">
-            <input type="submit" value="Continue" class="button-styling">
+            <label for="to-destination-box">Hasta</label>
+            <input list ="suggestions" type="search" name="to-destination-box" id="to-destination-box" placeholder="Destino Final" required>
+            <input type="button" value="Invertir" class="button-styling" id="switch-button">
+            <input type="submit" value="Continuar" class="button-styling">
         </form>
         <div id="available-flights-container"></div>
     </dialog>
     <div id="call-to-action">
         <div>
-            <h1>Just focus on your destination, we'll focus on your satisfaction.</h1>
+            <h1>Usted se enfoca en su vuelo, nosotros en que lo disfrute.</h1>
             <div>
-                <button class="button-styling">Book your next trip</button>
-                <button class="button-styling">Join Us</button>
+                <button class="button-styling">Reserve su proximo viaje</button>
+                <button class="button-styling">Unase</button>
             </div>
         </div>
     </div>
-    <div id="user-info-wrapper"></div>
+    
 
 </body>
 <!-- <script src="utilityFunctions.js" type="module" ></script> -->

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Systema Administrativo</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <nav>
+        <div>FlyHigh</div>
+        <div id="main-options-container">
+            <button >Añadir Usuario</button>
+            <button >Borrar Usuario</button>
+            <button >Actualizar Usuario</button>            
+            <button >Buscar Vuelos</button>
+        </div>
+        <div id="sign-in-options">
+            <button class="button-styling">Iniciar Sesion</button>
+            <div id="signed-in-menu">
+                <span>Bienvenido! Nombre de Usuario</span>
+                <div id="signed-in-submenu-wrapper">
+                    <div id="signed-in-submenu">                      
+                        <span id="sign-out-button">Cerrar Sesion</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <dialog  id="new-user-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
+        <h1>Nuevo Usuario</h1>
+        <form action="" id="sign-up-form">            
+            <label for="fullName">Nombre Completo</label>
+            <input type="text" name="fullName" id="user-name" placeholder="Nombre Completo" autocomplete="on" required>
+            <label for="email">Correo Electronico</label>
+            <input type="email" name="email" placeholder="email" id="user-email" required>
+
+            <label for="password">Nueva Contraseña</label>
+            <input type="password" name="password" id="create-user-password" placeholder="Nueva Contraseña" required>
+
+            <label for="update"><input type="checkbox" name="update" id="update-checkbox" value="Actualizar">Actualizar</label>        
+            <label for="delete"><input type="checkbox" name="delete" id="delete-checkbox" value="Borrar">Borrar</label>        
+            <label for="create"><input type="checkbox" name="create" id="create-checkbox" value="Crear">Crear</label>   
+
+            <input type="submit" value="Confirmar" class="button-styling submit-button">
+        </form>        
+    </dialog>
+    <dialog id="sign-in-popover" popover>
+        <button class="button-styling close-popover-button">X</button>
+        <h1>Iniciar Sesion</h1>
+        <form action="" id="user-log-in-form">
+            <label for="email">Correo Electronico</label>
+            <input type="email" id="email" placeholder="email" autocomplete ="on" required>
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" placeholder="password" autocomplete="on" required>
+            <input type="submit" value="Iniciar" class="button-styling">
+        </form>
+        <!-- <span>Error:<br> wrong email or password, please try again.</span> -->
+    </dialog>
+    <dialog id="check-in-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
+        <h1>Registrar Vuelo</h1>
+        <form action="">
+            <label for="confirmation-number-box">Numero De Confirmacion</label>
+            <input type="number" name="confirmation-number-box" id="confirmation-number-box" placeholder="Numero de confirmacion" required>
+            
+            <input value="Go" type="Confirmar" class="button-styling">
+        </form>
+    </dialog>
+    <dialog id="book-flight-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
+        <h1>Search Flights</h1>
+        <form action="">
+            <label for="from-destination-box">From</label>
+            <input list="suggestions" type="search" name="from-destination-box" id="from-destination-box" placeholder="Starting Destination" required>
+            <datalist id="suggestions">
+                <option value="ATL"></option>
+                <option value="BOS"></option>
+                <option value="LAX"></option>
+                <option value="JFK"></option>
+                <option value="ORD"></option>
+                <option value="MIA"></option>
+                <option value="SFO"></option>
+                <option value="SEA"></option>
+                <option value="DFW"></option>
+                <option value="DEN"></option>
+            </datalist>
+              
+            <label for="to-destination-box">To</label>
+            <input list ="suggestions" type="search" name="to-destination-box" id="to-destination-box" placeholder="Final Destination" required>
+            <input type="button" value="Switch" class="button-styling" id="switch-button">
+            <input type="submit" value="Continue" class="button-styling">
+        </form>
+        <div id="available-flights-container"></div>
+    </dialog>
+    <dialog id="delete-user-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
+        <h1>Borrar Usuario</h1>
+        <form action="">
+            <label for="user-to-delete">ID de usuario</label>
+            <input type="number" name = "user-to-delete" required id="user-to-delete"> 
+            <input type="submit" value="Buscar" class="button-styling">
+        </form>
+    </dialog>
+    <dialog id="update-user-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
+        <h1>Actualizar Usuario</h1>
+        <form action="">
+            <label for="user-to-delete">ID de usuario</label>
+            <input type="text" required id="user-to-update">
+            
+            <input type="submit" value="Buscar" class="button-styling">
+        </form>
+    </dialog>
+</body>
+<!-- <script src="utilityFunctions.js" type="module" ></script> -->
+<script type="module" src="corporate.js"></script>
+
+</html>
