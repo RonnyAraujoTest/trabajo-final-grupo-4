@@ -16,7 +16,7 @@ function findUserSignIn(userEmail, userPassword, allClients) {
   return "undefined";
 }
 
-function findAvailableFlights() {
+function findAvailableFlights(flights) {
   const foundFlights = flights.filter(
     (flight) => flight.flightStatus === "available"
   );
@@ -59,8 +59,7 @@ function generateFlight(flight, flightsContainer) {
           <div class="flight-cost"><strong>Costo:</strong> ${flight.cost}</div>
           <button 
             data-flight-id="${flight.flightId}"
-            data-flight-data="${flight.date}"
-            data-flight-landing-date="${flight.landingDate}"
+            data-flight-date="${flight.date}"
             data-flight-seat-type="${flight.seatType}"
             data-flight-cost="${flight.cost}"            
             type="submit" class="button-styling reserve-flight-button">Reservar Vuelo</button>
@@ -96,7 +95,7 @@ function reserveFlight(flightInfo,  clientId, flightsReserved, flights){
   console.log(`Flight with id ${flightsThisTime} not found`)
 }
 function cancelFlight(flightNumber, flightsReserved){
-  const updatedFlightsReserved = flightsReserved.filter(flightToCancel=> flightToCancel.reserveId !== flightNumber)
+  const updatedFlightsReserved = flightsReserved.filter(flightToCancel=> flightToCancel.ClientId !== flightNumber)
   localStorage.setItem('reservedFlights', JSON.stringify(updatedFlightsReserved))
   return updatedFlightsReserved
 }

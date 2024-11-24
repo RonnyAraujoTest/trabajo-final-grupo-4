@@ -1,3 +1,4 @@
+import {flights} from './clients.js'
 const flightAdmins = [
     {
       id: 1,
@@ -51,4 +52,9 @@ function deleteFlight(flights, flightId){
     const flightIndex = flights.findIndex(flightId)
     flights.splice(flightIndex, 1)
 }
-export {flightAdmins}
+function findAllFlights(flights){
+  const allFlights = localStorage.getItem('currentFlights') !== null? JSON.parse(localStorage.getItem('currentFlights')): [...flights];
+  console.log(`flights ${allFlights}`)
+  return allFlights
+}
+export {flightAdmins, findAllFlights}

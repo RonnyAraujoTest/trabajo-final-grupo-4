@@ -1,4 +1,4 @@
-import {flightAdmins} from './flightAdmins.js'
+import {flightAdmins, findAllFlights} from './flightAdmins.js'
 let adminSignedIn = localStorage.getItem('adminSignedIn') === 'true'
 let adminUsers = localStorage.getItem('adminUsers') === null? [...flightAdmins]: JSON.parse(localStorage.getItem('adminUsers'))
 const currentSignedInUser = null
@@ -22,11 +22,14 @@ const updateUserPopOver = document.querySelector('#update-user-popover')
 const closeButtons = document.querySelectorAll('.close-popover-button')
 const dialogs = document.querySelectorAll('dialog')
 const forms = document.querySelectorAll('form')
+const findFlightsButton = document.querySelector('#main-options-container > button:nth-of-type(4)')
+const userLogInForm = document.querySelector('#user-log-in-form')
 signOutButton.onclick =()=> localStorage.setItem('adminSignedIn', false)
 signInButton.onclick=()=> signInPopOver.showModal()
 addUserButton.onclick=()=> addNewUserPopOver.showModal()
 deleteUserButton.onclick=()=> deleteUserPopOver.showModal()
 updateUserButton.onclick=()=> updateUserPopOver.showModal()
+
 
 dialogs.forEach((dialog, index) => {
     dialog.addEventListener("close", () => {
@@ -38,3 +41,30 @@ closeButtons.forEach((button, index) => {
         dialogs[index].close()
     });
 });
+addNewUserPopOver.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const form = document.querySelector('#new-user-popover > form')
+    const formData = new FormData(form)
+    const user = Object.fromEntries(formData)
+    let adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || []
+    user.id = adminUsers[adminUsers.length-1].id + 1
+    user.adminAccess = [user.create, user.update, user.delete]
+    adminUsers.push(user)
+    localStorage.setItem('adminUsers', JSON.stringify(adminUsers))
+    addNewUserPopOver.close()
+  })
+
+deleteUserPopOver.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const form = document.querySelector('#delete-user-popover > form')
+    const formData = new FormData(form)
+    const userId = formData.get('user-to-delete')
+    let adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || []
+    adminUsers = adminUsers.filter(user => user.id !== parseInt(userId))
+    alert(`usuario ${userId} borrado`)
+    localStorage.setItem('adminUsers', JSON.stringify(adminUsers))    
+    deleteUserPopOver.close()
+  })
+findFlightsButton.addEventListener('click', () => {
+    findAllFlights()
+})

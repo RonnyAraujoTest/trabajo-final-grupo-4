@@ -120,7 +120,7 @@ form{
         margin-bottom: 15px;
         border-radius: 4px;
         
-        &:is(:not([type="button"], [type="radio"], [type="submit"])){
+        &:is(:not([type="button"], [type="radio"], [type="submit"], [type="checkbox"])){
             outline: 2px solid var(--main-blue-color);
             &:focus-within{
                 outline: 3px solid ;

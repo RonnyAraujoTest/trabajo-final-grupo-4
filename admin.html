@@ -33,24 +33,25 @@
         <button class="button-styling close-popover-button" >X</button>
         <h1>Nuevo Usuario</h1>
         <form action="" id="sign-up-form">            
-            <label for="user-name">Primer Nombre</label>
-            <input type="text" name="user-name" id="user-name" placeholder="first name" autocomplete="on" required>
+            <label for="fullName">Nombre Completo</label>
+            <input type="text" name="fullName" id="user-name" placeholder="Nombre Completo" autocomplete="on" required>
+            <label for="email">Correo Electronico</label>
+            <input type="email" name="email" placeholder="email" id="user-email" required>
 
-            <label for="last-name">Apellido</label>
-            <input type="text" name="last-name" placeholder="last name" id="last-name" autocomplete="on" required>
-            
-            <label for="user-email">Correo Electronico</label>
-            <input type="email" placeholder="email" id="user-email" required>
+            <label for="password">Nueva Contraseña</label>
+            <input type="password" name="password" id="create-user-password" placeholder="Nueva Contraseña" required>
 
-            <label for="create-user-password">Nueva Contraseña</label>
-            <input type="password" name="create-user-password" id="create-user-password" placeholder="new password" required>
+            <label for="update"><input type="checkbox" name="update" id="update-checkbox" value="Actualizar">Actualizar</label>        
+            <label for="delete"><input type="checkbox" name="delete" id="delete-checkbox" value="Borrar">Borrar</label>        
+            <label for="create"><input type="checkbox" name="create" id="create-checkbox" value="Crear">Crear</label>   
+
             <input type="submit" value="Confirmar" class="button-styling submit-button">
         </form>        
     </dialog>
     <dialog id="sign-in-popover" popover>
         <button class="button-styling close-popover-button">X</button>
         <h1>Iniciar Sesion</h1>
-        <form action="" id="log-in-form">
+        <form action="" id="user-log-in-form">
             <label for="email">Correo Electronico</label>
             <input type="email" id="email" placeholder="email" autocomplete ="on" required>
             <label for="password">Contraseña</label>
@@ -100,7 +101,7 @@
         <h1>Borrar Usuario</h1>
         <form action="">
             <label for="user-to-delete">ID de usuario</label>
-            <input type="text" required id="user-to-delete">            
+            <input type="number" name = "user-to-delete" required id="user-to-delete"> 
             <input type="submit" value="Buscar" class="button-styling">
         </form>
     </dialog>

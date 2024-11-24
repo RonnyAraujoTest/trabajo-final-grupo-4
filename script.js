@@ -7,22 +7,15 @@ import {flights} from './clients.js'
 let currentUsers = []
 let currentReservedFlights = [];
 let currentFlights = [];
-const signUpButton = document.querySelector(
-  "#signing-options > button:first-of-type"
-);
-const signInButton = document.querySelector(
-  "#signing-options > button:last-of-type"
-);
+const signUpButton = document.querySelector("#signing-options > button:first-of-type");
+const signInButton = document.querySelector("#signing-options > button:last-of-type");
 const switchButton = document.querySelector("#switch-button");
-const checkInNavButton = document.querySelector(
-  "#main-options-container > button:nth-of-type(2)"
-);
+const flightStatus = document.querySelector("#main-options-container > button:nth-of-type(1)");
+const checkInNavButton = document.querySelector("#main-options-container > button:nth-of-type(2)");
 const checkInPopOver = document.querySelector("#check-in-popover");
 const bookFlightPopOver = document.querySelector("#book-flight-popover");
 const bookFlightForm = document.querySelector("#book-flight-popover form");
-const bookFlightNavButton = document.querySelector(
-  "#main-options-container > button:nth-of-type(3)"
-);
+const bookFlightNavButton = document.querySelector("#main-options-container > button:nth-of-type(3)");
 const signInPopOver = document.querySelector("#sign-in-popover");
 const signUpPopOver = document.querySelector("#sign-up-popover");
 const closePopOverButtons = document.querySelectorAll(".close-popover-button");
@@ -45,7 +38,17 @@ const flightsContainer = document.querySelector("#available-flights-container");
 const errorMsgElements = document.querySelectorAll('.error-message') 
 const reserveFlightButtons = document.querySelectorAll('.reserve-flight-button')
 const allInputs = document.querySelectorAll('input')
+const cancelFlightButton = document.querySelector('#cancel-flight-button')
 
+cancelFlightButton.addEventListener('click', (e) => {
+  const clientReservedFlights = JSON.parse(localStorage.getItem('reservedFlights'))
+  const userId = parseInt(JSON.parse(localStorage.getItem('userDetails')).id)
+  const flightNum = clientReservedFlights.filter(flight => flight.clientId === userId)
+  flightNum.forEach(flightId => {
+    cancelFlight(flightId, clientReservedFlights)
+  })
+  
+})
 const footer = `
     <footer>
       <div> © ${new Date().getFullYear()} Copyright: <span>Software Solution <strong>SRL</strong></span> <span>“Soluciones con un solo clic”</span></div>
@@ -266,14 +269,16 @@ function toggleCompanyTextBox(textBoxEnabled, removeChecked = true) {
 }
 bookFlightForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const allFlights = findAvailableFlights();
+  const getFlights = localStorage.getItem('currentFlights') !== null? JSON.parse(localStorage.getItem('currentFlights')): [...flights];
+  console.log(`flights ${getFlights}`)
+  const allFlights = findAvailableFlights(getFlights);
 
   const fromVal = fromInput.value.toLowerCase();
   const toVal = toInput.value.toLowerCase();
   let matchingFlights = allFlights.filter((flight) => {
     return (
       fromVal === flight.fromDestination.toLowerCase() &&
-      toVal === flight.toDestination.toLowerCase()
+      toVal === flight.toDestination.toLowerCase() 
     );
   });
   //vacia el contenerdor de vuelos encontrados
@@ -286,7 +291,7 @@ bookFlightForm.addEventListener("submit", (e) => {
   
   matchingFlights.forEach((flight) => {
     const flightDetails = {
-      date: formatTime(flight.flightDate),
+      date: (flight.flightDate),
       landingDate: formatTime(flight.landingDate),
       seatType: flight.seatType,
       cost: flight.baseCost,
@@ -311,12 +316,12 @@ bookFlightForm.addEventListener("submit", (e) => {
         e.target.style.cursor = 'default';        
         parentNode.style.color = reservedGreenColor;
         parentNode.style.outline = `2px solid ${reservedGreenColor}`;
-        const clientId = JSON.parse(localStorage.getItem('userDetails')).id
+        const clientId = parseInt(JSON.parse(localStorage.getItem('userDetails')).id)
         const flightDetails = {
           flightDate: e.target.dataset.flightDate,
-          flightId: e.target.dataset.flightId,
-          seatType: e.target.dataset.seatType,
-          baseCost: e.target.dataset.flightCost,    
+          flightId: parseInt(e.target.dataset.flightId),
+          seatType: e.target.dataset.flightSeatType,
+          baseCost: parseInt(e.target.dataset.flightCost),    
         }
         const flightsReservedNow = [...JSON.parse(localStorage.getItem('reservedFlights'))]
         const flightsNow = [...JSON.parse(localStorage.getItem('currentFlights'))]
