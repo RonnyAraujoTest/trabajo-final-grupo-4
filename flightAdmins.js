@@ -52,7 +52,7 @@ function deleteFlight(flights, flightId){
     const flightIndex = flights.findIndex(flightId)
     flights.splice(flightIndex, 1)
 }
-function findAllFlights(flights){
+function findAllFlights(){
   const allFlights = localStorage.getItem('currentFlights') !== null? JSON.parse(localStorage.getItem('currentFlights')): [...flights];
   console.log(`flights ${allFlights}`)
   return allFlights

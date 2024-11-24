@@ -68,3 +68,15 @@ deleteUserPopOver.addEventListener('submit', (e) => {
 findFlightsButton.addEventListener('click', () => {
     findAllFlights()
 })
+
+userLogInForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const form = document.querySelector('#user-log-in-form')
+    const formData = new FormData(form)
+    const adminUserDetails = formData.get('user-to-delete')
+    let adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || []
+    adminUsers = adminUsers.filter(user => user.id !== parseInt(userId))
+    alert(`usuario ${userId} borrado`)
+    localStorage.setItem('adminUserDetails', JSON.stringify(adminUserDetails))    
+    signInPopOver.close()
+  })
