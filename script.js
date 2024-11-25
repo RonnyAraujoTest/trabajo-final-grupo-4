@@ -394,6 +394,7 @@ flightStatus.addEventListener('click', () => {
 })
 
 checkFlightStatusPopOver.addEventListener('close', () => {
+  checkFlightStatusContainer.innerHTML = ""
   toggleWindowScrolling(true);
 })
 
