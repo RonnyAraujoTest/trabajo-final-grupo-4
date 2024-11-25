@@ -282,6 +282,15 @@ const reservedFlights = [
     flightId: 12,
     baseCost: 180,
     seatType: "Economy"
-  }
+  },
+  {
+    reservedId: 4,
+    flightDate: "2025-02-16T11:00:00-05:00",
+    clientId: 1,
+    flightId: 2,
+    baseCost: 500,
+    seatType: "First Class"
+  },
+ 
 ];
 export { clients, flights, reservedFlights };

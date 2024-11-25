@@ -1,5 +1,5 @@
 import {flightAdmins, findAllFlights,} from './flightAdmins.js'
-import {generateFlight} from './utilityFunctions.js'
+import {generateFlight, addFooter} from './utilityFunctions.js'
 let adminSignedIn = localStorage.getItem('adminSignedIn') === 'true'
 let adminUsers = localStorage.getItem('adminUsers') === null? [...flightAdmins]: JSON.parse(localStorage.getItem('adminUsers'))
 const currentSignedInUser = null
@@ -15,6 +15,7 @@ const signInButton = document.querySelector("#sign-in-options > button:first-of-
 const welcomeMessage = document.querySelector('#signed-in-sub-menu > span:first-of-type')
 const signInSubMenuWrapper = document.querySelector('#signed-in-submenu-wrapper')
 const signInSubMenu = document.querySelector('#signed-in-submenu')
+const signInAdminProfileName = document.querySelector('#signed-in-menu > span:first-of-type')
 const signOutButton = document.querySelector('#sign-out-button')
 const signInPopOver = document.querySelector('#sign-in-popover')
 const addNewUserPopOver = document.querySelector('#new-user-popover')
@@ -30,11 +31,29 @@ const findFlightsPopOver = document.querySelector('#all-flights-container-popove
 const userLogInForm = document.querySelector('#user-log-in-form')
 const flightsFoundContainer = document.querySelector('#all-flights-container')
 
-signOutButton.onclick =()=> localStorage.setItem('adminSignedIn', false)
-signInButton.onclick=()=> signInPopOver.showModal()
-addUserButton.onclick=()=> addNewUserPopOver.showModal()
-deleteUserButton.onclick=()=> deleteUserPopOver.showModal()
-updateUserButton.onclick=()=> updateUserPopOver.showModal()
+addFooter()
+document.addEventListener('DOMContentLoaded',()=>{
+    document.body.style.setProperty('--bg-image', `url("./adminBG.webp")`)
+})
+signOutButton.onclick =()=> {
+    signInButton.style.display = 'flex'
+    signInMenuContainer.style.display = 'none'
+    udpateSignIn(false)
+    localStorage.setItem('adminSignedIn', false)
+}
+signInButton.onclick=()=>  signInPopOver.showModal()  
+addUserButton.onclick=()=>      {
+    if(adminSignedIn) addNewUserPopOver.showModal() 
+    else signInPopOver.showModal()
+}
+deleteUserButton.onclick=()=>   {
+    if(adminSignedIn) deleteUserPopOver.showModal() 
+    else signInPopOver.showModal()
+}
+updateUserButton.onclick=()=>   {
+    if(adminSignedIn) updateUserPopOver.showModal() 
+    else signInPopOver.showModal()
+}
 
 
 dialogs.forEach((dialog, index) => {
@@ -54,7 +73,7 @@ addNewUserPopOver.addEventListener('submit', (e) => {
     const user = Object.fromEntries(formData)
     let adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || []
     user.id = adminUsers[adminUsers.length-1].id + 1
-    user.adminAccess = [user.create, user.update, user.delete]
+    user.adminAccess = "create,update,delete".split(',')
     adminUsers.push(user)
     localStorage.setItem('adminUsers', JSON.stringify(adminUsers))
     addNewUserPopOver.close()
@@ -86,7 +105,7 @@ findFlightsSubmitButton.addEventListener('click', (e) => {
             seatType: flight.seatType,
             cost: flight.baseCost,
         }
-        generateFlight(newFlight, flightsFoundContainer, false) 
+        generateFlight(newFlight, flightsFoundContainer, false, true) 
     })    
 })
 
@@ -94,26 +113,30 @@ userLogInForm.addEventListener('submit', (e) => {
     e.preventDefault()
   
     const formData = new FormData(e.target)
-    const emailElem = e.target.querySelector('#sign-in-email')
-    const passwordElem = e.target.querySelector('#sign-in-password')
     const getEmail = formData.get('sign-in-email')
     const getpassword = formData.get('sign-in-password') 
     const adminUsers = JSON.parse(localStorage.getItem('adminUsers'))
-    console.log(getEmail)
-    console.log(getpassword)
     const user = adminUsers.find(user => user.email === getEmail && user.password === getpassword)
     if(!user){
-        alert("user not found"); return
+        alert("user not found"); 
+        return
     }
     signInButton.style.display = 'none'
     signInMenuContainer.style.display = 'flex'
-    localStorage.setItem('adminSignedIn', false)
+    const userName = user.fullName.split(' ')[0]
+    signInAdminProfileName.innerHTML = `Saludos, ${userName}`
+    udpateSignIn(true)
+    localStorage.setItem('adminSignedIn', true)
     signInPopOver.close()
   })
 
   findFlightsButton.addEventListener('click', () => {    
-    findFlightsPopOver.showModal()
+    if(adminSignedIn) findFlightsPopOver.showModal()
+    else signInPopOver.showModal()
   })
   findFlightsPopOver.addEventListener('close', () => {
       flightsFoundContainer.innerHTML = ''
   })
+function udpateSignIn(newVal){
+    adminSignedIn = newVal
+}

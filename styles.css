@@ -1,7 +1,18 @@
-
+html{
+    background-color: black;
+}
+@keyframes fade-in {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
 body{
     display: flex;
     flex-direction: column;
+    --bg-image: url('./bodyWallpaperwebp.webp');
     margin: 0;
     padding: 0;
     height: 100%;
@@ -9,6 +20,7 @@ body{
     font-family: sans-serif;
     max-width: 1280px;
     margin-inline: auto;
+    animation: fade-in 0.6s ease-in-out forwards;
     /* outline: solid red 2px; */
     align-items: center;
     --main-blue-color: rgb(37, 84, 255) ;
@@ -19,7 +31,7 @@ body{
         width: 100%;
         z-index: -10;
         height: 100%;
-        background-image: url('./bodyWallpaperwebp.webp');
+        background-image: var(--bg-image);
         background-attachment:fixed;
         background-position: center;
         background-repeat: no-repeat;
@@ -359,7 +371,15 @@ footer{
     }
  }
 
- #cancel-flight-popover{
+ #cancel-flight-popover, #check-flight-status-popover{
     max-height: 500px;
     overflow-y: scroll;
+    overflow-x: hidden;
+ }
+ #flight-status-container{
+    display: grid;
+    gap: 10px;    
+ }
+ #get-flights-submit-button{
+    align-self: center;
  }

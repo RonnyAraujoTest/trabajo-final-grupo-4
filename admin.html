@@ -31,19 +31,19 @@
     </nav>
     <dialog  id="new-user-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
-        <h1>Nuevo Usuario</h1>
+        <h1>Añadir Usuario</h1>
         <form action="" id="sign-up-form">            
             <label for="user-name">Nombre Completo</label>
             <input type="text" name="fullName" id="user-name" placeholder="Nombre Completo" autocomplete="on" required>
             <label for="user-email">Correo Electronico</label>
-            <input type="email" name="email" placeholder="email" id="user-email" required autocomplete="on">
+            <input type="email" name="email" placeholder="Correo Electronico" id="user-email" required autocomplete="on">
 
             <label for="create-user-password">Nueva Contraseña</label>
             <input type="password" name="password" id="create-user-password" placeholder="Nueva Contraseña" autocomplete="on" required>
-
+<!-- 
             <label for="update-checkbox"><input type="checkbox" name="update" id="update-checkbox" value="Actualizar">Actualizar</label>        
             <label for="delete-checkbox"><input type="checkbox" name="delete" id="delete-checkbox" value="Borrar">Borrar</label>        
-            <label for="create-checkbox"><input type="checkbox" name="create" id="create-checkbox" value="Crear">Crear</label>   
+            <label for="create-checkbox"><input type="checkbox" name="create" id="create-checkbox" value="Crear">Crear</label>    -->
 
             <input type="submit" value="Confirmar" class="button-styling submit-button">
         </form>        
@@ -66,7 +66,7 @@
         <h1>Borrar Usuario</h1>
         <form action="">
             <label for="user-to-delete">ID de usuario</label>
-            <input type="number" name = "user-to-delete" required id="user-to-delete"> 
+            <input type="number" placeholder="3" name = "user-to-delete" required id="user-to-delete"> 
             <input type="submit" value="Buscar" class="button-styling">
         </form>
     </dialog>
@@ -75,7 +75,7 @@
         <h1>Actualizar Usuario</h1>
         <form action="">
             <label for="user-to-update">ID de usuario</label>
-            <input type="text" required id="user-to-update">            
+            <input type="text" placeholder="3" required id="user-to-update">            
             <input type="submit" value="Buscar" class="button-styling">
         </form>
     </dialog>
@@ -83,10 +83,10 @@
         <button class="button-styling close-popover-button" >X</button>
         <h1>Buscar Vuelos</h1>
         <form action="">
-            <div>
+            <!-- <div>
                 <label for="available-flights-input"><input type="checkbox" name="available-flights-input" id="available-flights-input" value="available">Disponible</label>
                 <label for="reserved-flights-input"><input type="checkbox" name="reserved-flights-input" id="reserved-flights-input" value="reserved">Reservado</label>
-            </div>
+            </div> -->
             <input type="submit" value="Buscar" id="get-flights-submit-button" class="button-styling">
         </form>      
         <div id="all-flights-container">
