@@ -57,6 +57,7 @@ cancelFlightForm.addEventListener('submit', (e) => {
   const reservedFlightsNow = JSON.parse(localStorage.getItem('reservedFlights'))
   const currentUserId = parseInt(JSON.parse(localStorage.getItem('userDetails')).id)
   const matchingReservedFlights = reservedFlightsNow.filter(flight => flight.flightId === flightNumber && flight.clientId === currentUserId)
+  const allFlightsNow = [...JSON.parse(localStorage.getItem('currentFlights'))]
   // generate flights to cancel individually 
   if(matchingReservedFlights.length > 0){
     
@@ -84,6 +85,11 @@ cancelFlightForm.addEventListener('submit', (e) => {
           parentNode.style.color = reservedGreenColor;
           parentNode.style.outline = `2px solid ${reservedGreenColor}`;
           const newFlights =reservedFlightsNow.filter(flight => matchingReservedFlights[0].flightId !== flight.flightId)
+          const flightIndex = allFlightsNow.findIndex(flight => flight.flightId === flightNumber)
+          if(flightIndex !== -1){
+            allFlightsNow[flightIndex].flightStatus = "available"
+            localStorage.setItem('currentFlights', JSON.stringify(allFlightsNow))
+          }
           localStorage.setItem('reservedFlights', JSON.stringify(newFlights))          
       })
     })
@@ -316,7 +322,7 @@ bookFlightForm.addEventListener("submit", (e) => {
   let matchingFlights = allFlights.filter((flight) => {
     return (
       fromVal === flight.fromDestination.toLowerCase() &&
-      toVal === flight.toDestination.toLowerCase() 
+      toVal === flight.toDestination.toLowerCase() && flight.flightStatus === "available"
     );
   });
   //vacia el contenerdor de vuelos encontrados
@@ -388,6 +394,7 @@ flightStatus.addEventListener('click', () => {
 })
 
 checkFlightStatusPopOver.addEventListener('close', () => {
+  checkFlightStatusContainer.innerHTML = ""
   toggleWindowScrolling(true);
 })
 
