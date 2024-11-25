@@ -38,7 +38,8 @@ function formatTime(datetimeLong) {
   return formattedTime;
 }
 
-function toggleWindowScrolling(enabled, body) {
+function toggleWindowScrolling(enabled) {
+  const body = document.body;
   if (!enabled) {
     body.style.height = "100%";
     body.style.overflowY = "hidden";
@@ -48,7 +49,7 @@ function toggleWindowScrolling(enabled, body) {
   body.style.overflowY = "initial";
 }
 
-function generateFlight(flight, flightsContainer, isFlightInteractible=true, buttonText="Reservar Vuelo") {
+function generateFlight(flight, flightsContainer, isFlightInteractible=true, buttonText="Reservar Vuelo", editable=false) {
   const landingDate = flight.landingDate !== undefined ? `<span class="flight-landing-date"><strong>Hora de llegada:</strong> ${formatTime(flight.landingDate)}</span>`: ""
   const button = isFlightInteractible ? `
     <button 
@@ -62,11 +63,11 @@ function generateFlight(flight, flightsContainer, isFlightInteractible=true, but
   const newFlight = `
       <div class="flight-template">
           <div>
-              <span class="flight-date"><strong>Hora de salida:</strong> ${formatTime(flight.date)}</span>
+              <span class="flight-date"><strong>Hora de salida:</strong> <span contenteditable="${editable}">${formatTime(flight.date)}</span></span>
               ${landingDate}
           </div>
           <div class="flight-seat-type"><strong>Tipo de asiento</strong>: ${flight.seatType}</div>
-          <div><strong>Flight ID:</strong> ${flight.flightId}</div>
+          <div><strong>ID de Vuelo:</strong> ${flight.flightId}</div>
           <div class="flight-cost"><strong>Costo:</strong> ${flight.cost}</div>
           ${button}
       </div>
@@ -109,7 +110,17 @@ function cancelFlight(flightNumber, flightsReserved){
   localStorage.setItem('reservedFlights', JSON.stringify(updatedFlightsReserved))
   return updatedFlightsReserved
 }
+function addFooter(){
+  const body = document.body;
+  const footer = `
+      <footer>
+        <div> © ${new Date().getFullYear()} Copyright: <span>Software Solution <strong>SRL</strong></span> <span>“Soluciones con un solo clic”</span></div>
+      </footer>
+  `;
+  body.insertAdjacentHTML("beforeend", footer);
+}
 export {
   findUserSignIn,  findAvailableFlights,  createNewClient,  formatTime,
-  toggleWindowScrolling,  generateFlight, print, currentClients, reservedFlights, cancelFlight, reserveFlight
+  toggleWindowScrolling,  generateFlight, print, currentClients, 
+  reservedFlights, cancelFlight, reserveFlight, addFooter
 };

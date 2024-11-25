@@ -12,15 +12,15 @@
     <nav>
         <div>FlyHigh</div>
         <div id="main-options-container">
-            <button >Estado De Vuelo </button>
-            <button >Registrar Vuelo</button>
+            <button >Estado De Vuelos </button>
+            <!-- <button >Registrar Vuelo</button> -->
             <button >Vuelos Disponibles</button>
         </div>
         <div id="signing-options">
             <button class="button-styling">Crear Cuenta</button>
             <button class="button-styling">Iniciar Sesion</button>
             <div id="signed-in-menu">
-                <span>Bienvenido, usuario</span>
+                <span>Saludos, usuario</span>
                 <div id="signed-in-submenu-wrapper">
                     <div id="signed-in-submenu">
                         <span id="cancel-flight-button">Cancelar Vuelo</span>
@@ -104,6 +104,13 @@
         </form>
         <div id="cancelable-flights-container"></div>
     </dialog>
+
+    <dialog id="check-flight-status-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
+        <h1>Ver Estado de Vuelos</h1>        
+        <div id="flight-status-container"></div>
+    </dialog>
+
     <dialog id="book-flight-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
         <h1>Buscar Vuelos</h1>
