@@ -72,7 +72,7 @@ const flights = [
     seatId: "25B",
     seatType: "Economy",
     baseCost: 200,
-    flightStatus: "reserved",
+    flightStatus: "available",
   },
   {
     flightId: 2,
@@ -98,7 +98,7 @@ const flights = [
     seatId: "14C",
     seatType: "Economy",
     baseCost: 150,
-    flightStatus: "unavailable",
+    flightStatus: "available",
   },
   {
     flightId: 4,
@@ -125,7 +125,7 @@ const flights = [
     seatType: "First Class",
     baseCost: 400,
     flightStatus: "available",
-  },  
+  },
   {
     flightId: 6,
     flightDate: "2025-02-20T09:00:00-05:00",
@@ -163,7 +163,7 @@ const flights = [
     seatId: "5A",
     seatType: "First Class",
     baseCost: 350,
-    flightStatus: "reserved",
+    flightStatus: "available",
   },
   {
     flightId: 9,
@@ -215,7 +215,7 @@ const flights = [
     seatId: "13B",
     seatType: "Economy",
     baseCost: 180,
-    flightStatus: "reserved",
+    flightStatus: "available",
   },
   {
     flightId: 13,
@@ -255,6 +255,146 @@ const flights = [
     seatType: "First Class",
     baseCost: 400,
     flightStatus: "available",
+  },
+  {
+    "flightId": 16,
+    "flightDate": "2025-03-02T00:00:00-05:00",
+    "fromDestination": "JFK",
+    "toDestination": "DFW",
+    "flightNumber": "UA011",
+    "confirmationNumber": "33445567",
+    "landingDate": "2025-03-02T03:00:00-05:00",
+    "seatId": "17B",
+    "seatType": "Fist Class",
+    "baseCost": 420,
+    "flightStatus": "available"
+  },
+  {
+    "flightId": 17,
+    "flightDate": "2025-03-03T00:00:00-05:00",
+    "fromDestination": "ORD",
+    "toDestination": "DEN",
+    "flightNumber": "UA012",
+    "confirmationNumber": "33445568",
+    "landingDate": "2025-03-03T03:00:00-05:00",
+    "seatId": "18C",
+    "seatType": "Economy",
+    "baseCost": 380,
+    "flightStatus": "available"
+  }, {
+    "flightId": 18,
+    "flightDate": "2025-03-04T00:00:00-05:00",
+    "fromDestination": "ATL",
+    "toDestination": "BOS",
+    "flightNumber": "UA013",
+    "confirmationNumber": "33445569",
+    "landingDate": "2025-03-04T03:00:00-05:00",
+    "seatId": "19D",
+    "seatType": "First Class",
+    "baseCost": 410,
+    "flightStatus": "available"
+  },
+  {
+    "flightId": 19,
+    "flightDate": "2025-03-05T00:00:00-05:00",
+    "fromDestination": "MIA",
+    "toDestination": "SFO",
+    "flightNumber": "UA014",
+    "confirmationNumber": "33445570",
+    "landingDate": "2025-03-05T03:00:00-05:00",
+    "seatId": "20E",
+    "seatType": "Fist Class",
+    "baseCost": 430,
+    "flightStatus": "available"
+  },
+  {
+    "flightId": 20,
+    "flightDate": "2025-03-06T00:00:00-05:00",
+    "fromDestination": "LAX",
+    "toDestination": "JFK",
+    "flightNumber": "UA015",
+    "confirmationNumber": "33445571",
+    "landingDate": "2025-03-06T03:00:00-05:00",
+    "seatId": "21F",
+    "seatType": "Economy",
+    "baseCost": 370,
+    "flightStatus": "available"
+  }, {
+    "flightId": 21,
+    "flightDate": "2025-03-07T00:00:00-05:00",
+    "fromDestination": "ORD",
+    "toDestination": "MIA",
+    "flightNumber": "UA016",
+    "confirmationNumber": "33445572",
+    "landingDate": "2025-03-07T03:00:00-05:00",
+    "seatId": "22A",
+    "seatType": "First Class",
+    "baseCost": 390,
+    "flightStatus": "available"
+  }, {
+    "flightId": 22,
+    "flightDate": "2025-03-08T00:00:00-05:00",
+    "fromDestination": "SFO",
+    "toDestination": "SEA",
+    "flightNumber": "UA017",
+    "confirmationNumber": "33445573",
+    "landingDate": "2025-03-08T03:00:00-05:00",
+    "seatId": "23B",
+    "seatType": "Fist Class",
+    "baseCost": 415,
+    "flightStatus": "available"
+  },
+  {
+    "flightId": 23,
+    "flightDate": "2025-03-09T00:00:00-05:00",
+    "fromDestination": "DFW",
+    "toDestination": "DEN",
+    "flightNumber": "UA018",
+    "confirmationNumber": "33445574",
+    "landingDate": "2025-03-09T03:00:00-05:00",
+    "seatId": "24C",
+    "seatType": "Economy",
+    "baseCost": 375,
+    "flightStatus": "available"
+  },
+  {
+    "flightId": 24,
+    "flightDate": "2025-03-04T00:00:00-05:00",
+    fromDestination: "LAX",
+    toDestination: "JFK",
+    "flightNumber": "UA013",
+    "confirmationNumber": "33445569",
+    "landingDate": "2025-03-04T03:00:00-05:00",
+    "seatId": "19D",
+    "seatType": "First Class",
+    "baseCost": 410,
+    "flightStatus": "available"
+  },
+  {
+    "flightId": 25,
+    "flightDate": "2025-03-04T00:00:00-05:00",
+    "fromDestination": "ATL",
+    fromDestination: "ORD",
+    toDestination: "MIA",
+    "confirmationNumber": "33445569",
+    "landingDate": "2025-03-04T03:00:00-05:00",
+    "seatId": "19D",
+    "seatType": "First Class",
+    "baseCost": 410,
+    "flightStatus": "available"
+  },
+  {
+    "flightId": 26,
+    "flightDate": "2025-03-04T00:00:00-05:00",
+    "fromDestination": "ATL",
+    fromDestination: "JFK",
+    toDestination: "MIA",
+    "confirmationNumber": "33445569",
+    "landingDate": "2025-03-04T03:00:00-05:00",
+    "seatId": "19D",
+    "seatType": "First Class",
+    "baseCost": 410,
+    "flightStatus": "available"
   }
 ];
 
@@ -291,6 +431,6 @@ const reservedFlights = [
     baseCost: 500,
     seatType: "First Class"
   },
- 
+
 ];
 export { clients, flights, reservedFlights };
