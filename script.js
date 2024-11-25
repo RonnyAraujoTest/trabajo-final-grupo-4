@@ -39,16 +39,61 @@ const errorMsgElements = document.querySelectorAll('.error-message')
 const reserveFlightButtons = document.querySelectorAll('.reserve-flight-button')
 const allInputs = document.querySelectorAll('input')
 const cancelFlightButton = document.querySelector('#cancel-flight-button')
-
-cancelFlightButton.addEventListener('click', (e) => {
-  const clientReservedFlights = JSON.parse(localStorage.getItem('reservedFlights'))
-  const userId = parseInt(JSON.parse(localStorage.getItem('userDetails')).id)
-  const flightNum = clientReservedFlights.filter(flight => flight.clientId === userId)
-  flightNum.forEach(flightId => {
-    cancelFlight(flightId, clientReservedFlights)
-  })
-  
+const cancelFlightPopOver = document.querySelector('#cancel-flight-popover')
+const cancelFlightPopOverSearchButton = document.querySelector('#cancel-flight-popover > search-flight-button')
+const cancelFlightForm = document.querySelector('#cancel-flight-popover form')
+const cancelableFlightsContainer = document.querySelector("#cancelable-flights-container")
+cancelFlightButton.addEventListener('click', () => {
+  toggleWindowScrolling(false, body);
+  cancelFlightPopOver.showModal()  
+  cancelableFlightsContainer.innerHTML = ""
 })
+cancelFlightPopOver.addEventListener('close', () => {
+  toggleWindowScrolling(true, body);
+})
+cancelFlightForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const flightNumber = parseInt(new FormData(cancelFlightForm).get('cancel-flight-input'))
+  const reservedFlightsNow = JSON.parse(localStorage.getItem('reservedFlights'))
+  const currentUserId = parseInt(JSON.parse(localStorage.getItem('userDetails')).id)
+  const matchingReservedFlights = reservedFlightsNow.filter(flight => flight.flightId === flightNumber && flight.clientId === currentUserId)
+  // generate flights to cancel individually 
+  if(matchingReservedFlights.length > 0){
+    
+    cancelableFlightsContainer.innerHTML = ""
+    matchingReservedFlights.forEach(flight => {
+      const flightDetails = {
+        date: flight.flightDate,
+        landingDate: flight.landingDate,
+        seatType: flight.seatType,
+        cost: flight.baseCost,
+        flightId: flight.flightId
+      };
+      generateFlight(flightDetails, cancelableFlightsContainer, true, "Cancelar Vuelo")
+    })
+    cancelableFlightsContainer.querySelectorAll(".reserve-flight-button").forEach((button) => {
+
+      const reservedGreenColor = 'red'
+      button.addEventListener("click", (e) => {
+          const parentNode = e.target.parentNode;      
+          e.target.textContent = "Vuelo Cancelado";
+          e.target.setAttribute("disabled", "disabled")
+          e.target.style.backgroundColor = reservedGreenColor;
+          e.target.style.pointerEvents = 'none';
+          e.target.style.cursor = 'default';        
+          parentNode.style.color = reservedGreenColor;
+          parentNode.style.outline = `2px solid ${reservedGreenColor}`;
+          const newFlights =reservedFlightsNow.filter(flight => matchingReservedFlights[0].flightId !== flight.flightId)
+          localStorage.setItem('reservedFlights', JSON.stringify(newFlights))          
+      })
+    })
+    return 
+  }
+  // console.log("nothing found")
+}
+  // cancelFlight(flightNumber, reservedFlightsNow)
+  // cancelFlightPopOver.close()
+)
 const footer = `
     <footer>
       <div> © ${new Date().getFullYear()} Copyright: <span>Software Solution <strong>SRL</strong></span> <span>“Soluciones con un solo clic”</span></div>
@@ -194,7 +239,7 @@ function validateSignIn(e) {
   if (userDetails !== "undefined") {
     const spanElement = document.querySelector(`#signed-in-menu span:first-of-type`);
     userLoggedIn = true;
-    spanElement.textContent = `Bienvenido, ${userDetails.firstName}`;
+    spanElement.textContent = `Saludos, ${userDetails.firstName}`;
     const userJson = JSON.stringify(userDetails);
     localStorage.setItem("isUserSignedIn", userLoggedIn)
     localStorage.setItem("userDetails", userJson);
@@ -292,7 +337,7 @@ bookFlightForm.addEventListener("submit", (e) => {
   matchingFlights.forEach((flight) => {
     const flightDetails = {
       date: (flight.flightDate),
-      landingDate: formatTime(flight.landingDate),
+      landingDate: (flight.landingDate),
       seatType: flight.seatType,
       cost: flight.baseCost,
       flightId: flight.flightId

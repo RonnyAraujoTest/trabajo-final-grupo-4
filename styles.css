@@ -11,7 +11,7 @@ body{
     margin-inline: auto;
     /* outline: solid red 2px; */
     align-items: center;
-    --main-blue-color: rgb(37, 84, 255);
+    --main-blue-color: rgb(37, 84, 255) ;
     min-height: 2000px;    
     &::before{
         position: fixed;
@@ -341,4 +341,25 @@ footer{
      dialog::backdrop{
         backdrop-filter: blur(0px);
      }
+ }
+ /* #all-flights-container-popover{
+    color: black;
+ } */
+ #all-flights-container-popover{
+    max-height: 500px;
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;        
+    }
+    #all-flights-container{
+        display: grid;
+        gap: 10px;
+    }
+ }
+
+ #cancel-flight-popover{
+    max-height: 500px;
+    overflow-y: scroll;
  }

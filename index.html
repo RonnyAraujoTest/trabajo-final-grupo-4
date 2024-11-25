@@ -93,6 +93,17 @@
             <input value="Continuar" type="submit" class="button-styling">
         </form>
     </dialog>
+    <dialog id="cancel-flight-popover" popover>
+        <button class="button-styling close-popover-button" >X</button>
+        <h1>Cancelar Vuelo</h1>
+        <form action="">
+            <label for="cancel-flight-input">Numero de confirmacion / vuelo</label>
+            <input type="number" name="cancel-flight-input" id="cancel-flight-input" placeholder="numero de confirmacion / vuelo" required>
+            
+            <input value="Buscar Vuelos" type="submit" class="button-styling search-flight-button">
+        </form>
+        <div id="cancelable-flights-container"></div>
+    </dialog>
     <dialog id="book-flight-popover" popover>
         <button class="button-styling close-popover-button" >X</button>
         <h1>Buscar Vuelos</h1>
