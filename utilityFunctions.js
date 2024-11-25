@@ -48,21 +48,27 @@ function toggleWindowScrolling(enabled, body) {
   body.style.overflowY = "initial";
 }
 
-function generateFlight(flight, flightsContainer) {
+function generateFlight(flight, flightsContainer, isFlightInteractible=true, buttonText="Reservar Vuelo") {
+  const landingDate = flight.landingDate !== undefined ? `<span class="flight-landing-date"><strong>Hora de llegada:</strong> ${formatTime(flight.landingDate)}</span>`: ""
+  const button = isFlightInteractible ? `
+    <button 
+      data-flight-id="${flight.flightId}"
+      data-flight-date="${flight.date}"
+      data-flight-seat-type="${flight.seatType}"
+      data-flight-cost="${flight.cost}"   
+      data-flight-number="${flight.flightNumber}"         
+    type="submit" class="button-styling reserve-flight-button">${buttonText}</button>
+  ` : "";
   const newFlight = `
       <div class="flight-template">
           <div>
-              <span class="flight-date"><strong>Hora de salida:</strong> ${flight.date}</span>
-              <span class="flight-landing-date"><strong>Hora de llegada:</strong> ${flight.landingDate}</span>
+              <span class="flight-date"><strong>Hora de salida:</strong> ${formatTime(flight.date)}</span>
+              ${landingDate}
           </div>
           <div class="flight-seat-type"><strong>Tipo de asiento</strong>: ${flight.seatType}</div>
+          <div><strong>Flight ID:</strong> ${flight.flightId}</div>
           <div class="flight-cost"><strong>Costo:</strong> ${flight.cost}</div>
-          <button 
-            data-flight-id="${flight.flightId}"
-            data-flight-date="${flight.date}"
-            data-flight-seat-type="${flight.seatType}"
-            data-flight-cost="${flight.cost}"            
-            type="submit" class="button-styling reserve-flight-button">Reservar Vuelo</button>
+          ${button}
       </div>
       `;
   flightsContainer.insertAdjacentHTML("beforeend", newFlight);
@@ -96,6 +102,10 @@ function reserveFlight(flightInfo,  clientId, flightsReserved, flights){
 }
 function cancelFlight(flightNumber, flightsReserved){
   const updatedFlightsReserved = flightsReserved.filter(flightToCancel=> flightToCancel.ClientId !== flightNumber)
+  const currentFlightsList = localStorage.getItem('currentFlights') !== null? JSON.parse(localStorage.getItem('currentFlights')): [...flights];
+  const flightIndex = currentFlightsList.findIndex(flight => flight.flightId === flightNumber)
+  currentFlightsList[flightIndex].flightStatus = "available"
+  localStorage.setItem('currentFlights', JSON.stringify(currentFlightsList))
   localStorage.setItem('reservedFlights', JSON.stringify(updatedFlightsReserved))
   return updatedFlightsReserved
 }
